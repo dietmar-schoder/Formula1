@@ -14,7 +14,7 @@ public class OpenF1Service(HttpClient client) : IOpenF1Service
         //=> $"/v1/api/jobs/gb/search/1?app_id=57a12a98&app_key=a174af374d525386c8275716ab096834&what_and=.net,c%23&content-type=application/json&salary_min=40000&salary_max=120000&where=manchester&distance=220&max_days_old=1&results_per_page=100000";
         => $"/v1/api/jobs/gb/search/1?app_id=57a12a98&app_key=a174af374d525386c8275716ab096834&what_and=.net,c%23&content-type=application/json&salary_min=40000&salary_max=120000&where=london&distance=200&max_days_old=1&results_per_page=100000";
 
-    public async Task<List<Result>> ListJobsAsync()
+    public async Task<JobData_OLD> ListJobsAsync()
     {
         var response = await _client.GetAsync(GetJobDataUrl());
         var contentType = response.Content.Headers.ContentType;
@@ -22,7 +22,7 @@ public class OpenF1Service(HttpClient client) : IOpenF1Service
         {
             contentType.CharSet = "utf-8";
         }
-        var jobData = await response.Content.ReadFromJsonAsync<JobData>();
-        return [.. jobData.Results.OrderByDescending(j => j.created)];
+        var jobData = await response.Content.ReadFromJsonAsync<JobData_OLD>();
+        return jobData;
     }
 }

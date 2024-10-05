@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IDataImportService, DataImportService>();
         services.AddSingleton<IVersionService, VersionService>();
+
         return services;
     }
 

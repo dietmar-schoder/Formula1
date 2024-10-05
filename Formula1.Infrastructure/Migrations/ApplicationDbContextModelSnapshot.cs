@@ -39,7 +39,7 @@ namespace Formula1.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FORMULA1_Circuits");
+                    b.ToTable("FORMULA1_Circuits", (string)null);
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.Constructor", b =>
@@ -55,7 +55,7 @@ namespace Formula1.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FORMULA1_Constructors");
+                    b.ToTable("FORMULA1_Constructors", (string)null);
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.Driver", b =>
@@ -71,7 +71,7 @@ namespace Formula1.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FORMULA1_Drivers");
+                    b.ToTable("FORMULA1_Drivers", (string)null);
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.Race", b =>
@@ -93,7 +93,7 @@ namespace Formula1.Infrastructure.Migrations
 
                     b.HasIndex("CircuitId");
 
-                    b.ToTable("FORMULA1_Races");
+                    b.ToTable("FORMULA1_Races", (string)null);
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.Result", b =>
@@ -125,7 +125,7 @@ namespace Formula1.Infrastructure.Migrations
 
                     b.HasIndex("SessionId");
 
-                    b.ToTable("FORMULA1_Results");
+                    b.ToTable("FORMULA1_Results", (string)null);
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.Session", b =>
@@ -149,7 +149,7 @@ namespace Formula1.Infrastructure.Migrations
 
                     b.HasIndex("SessionTypeId");
 
-                    b.ToTable("FORMULA1_Sessions");
+                    b.ToTable("FORMULA1_Sessions", (string)null);
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.SessionType", b =>
@@ -164,7 +164,7 @@ namespace Formula1.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FORMULA1_SessionTypes");
+                    b.ToTable("FORMULA1_SessionTypes", (string)null);
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.Race", b =>

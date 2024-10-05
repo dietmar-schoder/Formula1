@@ -2,7 +2,10 @@
 
 public enum SessionTypeEnum
 {
-    Practice = 0,
-    Qualifying = 1,
-    Race = 2
+    Race = 0,
+    Practice1 = 1,
+    Practice2 = 2,
+    Practice3 = 3,
+    Sprint = 8,
+    Qualifying = 9
 }

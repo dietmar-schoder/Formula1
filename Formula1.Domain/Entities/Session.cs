@@ -1,6 +1,4 @@
-﻿using Formula1.Domain.Enums;
-
-namespace Formula1.Domain.Entities;
+﻿namespace Formula1.Domain.Entities;
 
 public class Session
 {
@@ -13,4 +11,6 @@ public class Session
 
     public Guid RaceId { get; set; }
     public Race Race { get; set; }
+
+    public ICollection<Result> Results { get; set; }
 }

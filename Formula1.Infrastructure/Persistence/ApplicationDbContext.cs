@@ -1,4 +1,5 @@
-﻿using Formula1.Domain.Entities;
+﻿using Formula1.Application.Interfaces;
+using Formula1.Domain.Entities;
 using Formula1.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 namespace Formula1.Infrastructure.Persistence;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
-    : DbContext(options)
+    : DbContext(options), IApplicationDbContext
 {
     private readonly string _connectionString = configuration.GetConnectionString("DefaultConnection");
 
