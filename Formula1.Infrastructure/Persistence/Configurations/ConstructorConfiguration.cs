@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Formula1.Infrastructure.Persistence.Configurations;
 
-public class RaceConfiguration
+public class ConstructorConfiguration
 {
-    public static void Configure(EntityTypeBuilder<Race> builder)
+    public static void Configure(EntityTypeBuilder<Constructor> builder)
     {
         builder.HasKey(e => e.Id);
+        builder.Property(e => e.Name).IsRequired().HasMaxLength(1023);
     }
 }

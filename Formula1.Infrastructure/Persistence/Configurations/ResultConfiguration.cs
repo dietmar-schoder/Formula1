@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Formula1.Infrastructure.Persistence.Configurations;
 
-public class RaceConfiguration
+public class ResultConfiguration
 {
-    public static void Configure(EntityTypeBuilder<Race> builder)
+    public static void Configure(EntityTypeBuilder<Result> builder)
     {
         builder.HasKey(e => e.Id);
     }

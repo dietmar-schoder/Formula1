@@ -12,7 +12,15 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<Circuit> FORMULA1_Circuits { get; set; }
 
+    public DbSet<Constructor> FORMULA1_Constructors { get; set; }
+
+    public DbSet<Driver> FORMULA1_Drivers { get; set; }
+
     public DbSet<Race> FORMULA1_Races { get; set; }
+
+    public DbSet<Result> FORMULA1_Results { get; set; }
+
+    public DbSet<Session> FORMULA1_Sessions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(_connectionString);
@@ -20,7 +28,11 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         CircuitConfiguration.Configure(modelBuilder.Entity<Circuit>());
+        ConstructorConfiguration.Configure(modelBuilder.Entity<Constructor>());
+        DriverConfiguration.Configure(modelBuilder.Entity<Driver>());
         RaceConfiguration.Configure(modelBuilder.Entity<Race>());
+        ResultConfiguration.Configure(modelBuilder.Entity<Result>());
+        SessionConfiguration.Configure(modelBuilder.Entity<Session>());
 
         base.OnModelCreating(modelBuilder);
     }
