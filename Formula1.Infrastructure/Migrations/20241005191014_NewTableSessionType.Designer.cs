@@ -4,6 +4,7 @@ using Formula1.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Formula1.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241005191014_NewTableSessionType")]
+    partial class NewTableSessionType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,8 +150,6 @@ namespace Formula1.Infrastructure.Migrations
 
                     b.HasIndex("RaceId");
 
-                    b.HasIndex("SessionTypeId");
-
                     b.ToTable("FORMULA1_Sessions");
                 });
 
@@ -213,15 +214,7 @@ namespace Formula1.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Formula1.Domain.Entities.SessionType", "SessionType")
-                        .WithMany()
-                        .HasForeignKey("SessionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Race");
-
-                    b.Navigation("SessionType");
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.Circuit", b =>

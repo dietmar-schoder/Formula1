@@ -8,7 +8,8 @@ public class Session
 
     public DateTime StartDateTimeUtc { get; set; }
 
-    public SessionTypeEnum SessionTypeId { get; set; }
+    public int SessionTypeId { get; set; }
+    public SessionType SessionType { get; set; }
 
     public Guid RaceId { get; set; }
     public Race Race { get; set; }

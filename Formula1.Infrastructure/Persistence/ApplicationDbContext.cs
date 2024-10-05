@@ -22,6 +22,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<Session> FORMULA1_Sessions { get; set; }
 
+    public DbSet<SessionType> FORMULA1_SessionTypes { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(_connectionString);
 
@@ -33,6 +35,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         RaceConfiguration.Configure(modelBuilder.Entity<Race>());
         ResultConfiguration.Configure(modelBuilder.Entity<Result>());
         SessionConfiguration.Configure(modelBuilder.Entity<Session>());
+        SessionTypeConfiguration.Configure(modelBuilder.Entity<SessionType>());
 
         base.OnModelCreating(modelBuilder);
     }
