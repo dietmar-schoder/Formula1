@@ -1,34 +1,33 @@
+using Formula1.Api.Endpoints;
+using Formula1.Api.Extensions;
+using Formula1.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+
+#region Services
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
+
+#endregion
+#region Build
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.MapVersionEndpoints();
+app.MapDataImportEndpoints();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-});
+#endregion
+#region Run
 
 app.Run();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+public partial class Program { } // For NUnit WebApplication integration tests
+
+#endregion
