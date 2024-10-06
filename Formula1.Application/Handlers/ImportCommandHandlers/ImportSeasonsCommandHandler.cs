@@ -17,18 +17,18 @@ public class ImportSeasonsCommandHandler(IApplicationDbContext context, IErgastA
     public async Task<Unit> Handle(ImportSeasonsCommand request, CancellationToken cancellationToken)
     {
         var dbSeasons = await _context.FORMULA1_Seasons.ToDictionaryAsync(e => e.Year, cancellationToken);
-        foreach (var season in await _ergastApisClient.GetSeasonsAsync())
+        foreach (var importSeason in await _ergastApisClient.GetSeasonsAsync())
         {
-            var year = int.Parse(season.season);
-            dbSeasons.TryGetValue(year, out var existingEntity);
-            UpdateDbSeason(existingEntity ?? (await _context.FORMULA1_Seasons.AddAsync(new DbSeason(year), cancellationToken)).Entity, season);
+            var year = int.Parse(importSeason.season);
+            dbSeasons.TryGetValue(year, out var existingSeason);
+            UpdateDbSeason(existingSeason ?? (await _context.FORMULA1_Seasons.AddAsync(new DbSeason(year), cancellationToken)).Entity, importSeason);
         }
         await _context.SaveChangesAsync(cancellationToken);
         return Unit.Value;
 
-        static void UpdateDbSeason(DbSeason dbSeason, Season season)
+        static void UpdateDbSeason(DbSeason dbSeason, Season importSeason)
         {
-            dbSeason.WikipediaUrl = season.url;
+            dbSeason.WikipediaUrl = importSeason.url;
         }
     }
 }

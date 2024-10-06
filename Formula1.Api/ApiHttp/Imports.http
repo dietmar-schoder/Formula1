@@ -19,3 +19,7 @@ Accept: application/json
 
 POST {{Formula1.Api_HostAddress}}/api/seasons
 Accept: application/json
+
+### drivers: https://ergast.com/api/f1/drivers.json?limit=100&offset=100 (860)
+### constructors: https://ergast.com/api/f1/constructors.json?limit=100&offset=100 (212)
+### results: http://ergast.com/api/f1/2008/5/results.json?limit=100&offset=0

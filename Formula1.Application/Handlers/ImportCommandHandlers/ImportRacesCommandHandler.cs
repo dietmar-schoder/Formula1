@@ -5,7 +5,6 @@ using Formula1.Contracts.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using DbRace = Formula1.Domain.Entities.Race;
-using DbCircuit = Formula1.Domain.Entities.Circuit;
 
 namespace Formula1.Application.Handlers.ImportCommandHandlers;
 
