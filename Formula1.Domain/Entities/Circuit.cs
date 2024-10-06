@@ -9,4 +9,8 @@ public class Circuit
     public string ErgastCircuitId { get; set; }
 
     public ICollection<Race> Races { get; set; }
+
+    public Circuit() { }
+
+    public Circuit(Guid id) => Id = id;
 }

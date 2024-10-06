@@ -30,6 +30,7 @@ builder.Services.AddInfrastructureServices();
 var app = builder.Build();
 
 app.MapAliveEndpoints();
+app.MapCircuitsEndpoints();
 app.MapSeasonsEndpoints();
 app.MapSessionsEndpoints();
 app.MapSessionTypesEndpoints();

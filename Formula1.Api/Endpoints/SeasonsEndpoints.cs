@@ -1,4 +1,4 @@
-﻿using Formula1.Application.Commands.ImportSeasons;
+﻿using Formula1.Application.Commands.ImportCommands;
 using Formula1.Application.Queries;
 using MediatR;
 

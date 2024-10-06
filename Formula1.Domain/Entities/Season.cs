@@ -7,5 +7,9 @@
         public string WikipediaUrl { get; set; }
 
         public ICollection<Race> Races { get; set; }
+
+        public Season() { }
+
+        public Season(int year) => Year = year;
     }
 }

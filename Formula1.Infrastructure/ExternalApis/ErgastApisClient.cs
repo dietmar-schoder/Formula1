@@ -1,4 +1,4 @@
-﻿using Formula1.Contracts.Dtos;
+﻿using Formula1.Contracts.ImportErgastDtos;
 using Formula1.Contracts.Services;
 using System.Net.Http.Json;
 
@@ -10,18 +10,24 @@ public class ErgastApisClient(HttpClient client) : IErgastApisClient
 
     public string BaseAddress => _client.BaseAddress?.AbsoluteUri;
 
-    public static string GetSeasonDataUrl()
-        => $"api/f1/seasons.json?limit=100"; //https://ergast.com/api/f1/seasons.json?limit=100
-
-    public async Task<ErgastSeasonsData> GetSeasonsDataAsync()
+    public async Task<List<Circuit>> GetCircuitsAsync()
     {
-        var response = await _client.GetAsync(GetSeasonDataUrl());
-        var contentType = response.Content.Headers.ContentType;
-        //if (contentType != null && contentType.CharSet == "utf8")
-        //{
-        //    contentType.CharSet = "utf-8";
-        //}
-        var ergastSeason = await response.Content.ReadFromJsonAsync<ErgastSeasonsData>();
-        return ergastSeason;
+        var response = await _client.GetAsync("api/f1/circuits.json?limit=100");
+        var data = await response.Content.ReadFromJsonAsync<ErgastImportData>();
+        return data.MRData.CircuitTable.Circuits;
+    }
+
+    public async Task<List<Race>> GetRacesAsync(int year)
+    {
+        var response = await _client.GetAsync($"api/f1/{year}/races.json?limit=100");
+        var data = await response.Content.ReadFromJsonAsync<ErgastImportData>();
+        return data.MRData.RaceTable.Races;
+    }
+
+    public async Task<List<Season>> GetSeasonsAsync()
+    {
+        var response = await _client.GetAsync("api/f1/seasons.json?limit=100");
+        var data = await response.Content.ReadFromJsonAsync<ErgastImportData>();
+        return data.MRData.SeasonTable.Seasons;
     }
 }

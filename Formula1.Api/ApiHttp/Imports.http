@@ -1,0 +1,16 @@
+@Formula1.Api_HostAddress = https://localhost:7277
+
+### Circuits
+
+POST {{Formula1.Api_HostAddress}}/api/circuits
+Accept: application/json
+
+### Races
+
+POST {{Formula1.Api_HostAddress}}/api/races
+Accept: application/json
+
+### Seasons
+
+POST {{Formula1.Api_HostAddress}}/api/seasons
+Accept: application/json
