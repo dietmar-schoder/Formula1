@@ -4,7 +4,8 @@ public class Race
 {
     public Guid Id { get; set; }
 
-    public int Year { get; set; }
+    public int SeasonYear { get; set; }
+    public Season Season { get; set; }
 
     public int Round { get; set; }
 

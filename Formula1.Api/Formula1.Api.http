@@ -1,6 +1,16 @@
 @Formula1.Api_HostAddress = https://localhost:7277
 
-GET {{Formula1.Api_HostAddress}}/api/sessiontypes
+GET {{Formula1.Api_HostAddress}}/api/seasons
+Accept: application/json
+
+###
+
+GET {{Formula1.Api_HostAddress}}/api/seasons/2008
+Accept: application/json
+
+###
+
+POST {{Formula1.Api_HostAddress}}/api/seasons
 Accept: application/json
 
 ###
@@ -11,6 +21,11 @@ Accept: application/json
 ###
 
 GET {{Formula1.Api_HostAddress}}/api/sessions/52856ab0-d03b-40f6-a44b-4525bee6398b
+Accept: application/json
+
+###
+
+GET {{Formula1.Api_HostAddress}}/api/sessiontypes
 Accept: application/json
 
 ###

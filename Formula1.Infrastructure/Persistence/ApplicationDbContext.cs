@@ -1,4 +1,4 @@
-﻿using Formula1.Application.Interfaces;
+﻿using Formula1.Application.Interfaces.Persistence;
 using Formula1.Domain.Entities;
 using Formula1.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +21,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<Result> FORMULA1_Results { get; set; }
 
+    public DbSet<Season> FORMULA1_Seasons { get; set; }
+
     public DbSet<Session> FORMULA1_Sessions { get; set; }
 
     public DbSet<SessionType> FORMULA1_SessionTypes { get; set; }
@@ -35,6 +37,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         DriverConfiguration.Configure(modelBuilder.Entity<Driver>());
         RaceConfiguration.Configure(modelBuilder.Entity<Race>());
         ResultConfiguration.Configure(modelBuilder.Entity<Result>());
+        SeasonConfiguration.Configure(modelBuilder.Entity<Season>());
         SessionConfiguration.Configure(modelBuilder.Entity<Session>());
         SessionTypeConfiguration.Configure(modelBuilder.Entity<SessionType>());
 

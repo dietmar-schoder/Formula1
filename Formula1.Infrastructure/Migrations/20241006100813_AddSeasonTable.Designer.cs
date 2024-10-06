@@ -4,6 +4,7 @@ using Formula1.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Formula1.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241006100813_AddSeasonTable")]
+    partial class AddSeasonTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,14 +89,12 @@ namespace Formula1.Infrastructure.Migrations
                     b.Property<int>("Round")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeasonYear")
+                    b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CircuitId");
-
-                    b.HasIndex("SeasonYear");
 
                     b.ToTable("FORMULA1_Races");
                 });
@@ -192,15 +193,7 @@ namespace Formula1.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Formula1.Domain.Entities.Season", "Season")
-                        .WithMany("Races")
-                        .HasForeignKey("SeasonYear")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Circuit");
-
-                    b.Navigation("Season");
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.Result", b =>
@@ -262,11 +255,6 @@ namespace Formula1.Infrastructure.Migrations
             modelBuilder.Entity("Formula1.Domain.Entities.Driver", b =>
                 {
                     b.Navigation("Results");
-                });
-
-            modelBuilder.Entity("Formula1.Domain.Entities.Season", b =>
-                {
-                    b.Navigation("Races");
                 });
 
             modelBuilder.Entity("Formula1.Domain.Entities.Session", b =>

@@ -1,12 +1,11 @@
 using Formula1.Api.Endpoints;
 using Formula1.Api.Extensions;
-using Formula1.Application.Interfaces;
-using Formula1.Application.Services;
 using Formula1.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
-using System.Text.Json;
 using Microsoft.AspNetCore.Http.Json;
+using Formula1.Application.Interfaces.Persistence;
+using Formula1.Application.Queries;
 
 #region Services
 
@@ -21,9 +20,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(VersionService).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetVersionQueryHandler).Assembly));
 
-builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 
 #endregion
@@ -31,8 +29,10 @@ builder.Services.AddInfrastructureServices();
 
 var app = builder.Build();
 
-app.MapVersionEndpoints();
-app.MapDataQueryEndpoints();
+app.MapAliveEndpoints();
+app.MapSeasonsEndpoints();
+app.MapSessionsEndpoints();
+app.MapSessionTypesEndpoints();
 
 app.UseHttpsRedirection();
 

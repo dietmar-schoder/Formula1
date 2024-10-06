@@ -1,11 +1,11 @@
-﻿using Formula1.Application.Interfaces;
+﻿using Formula1.Application.Interfaces.Persistence;
 using Formula1.Application.Queries;
 using Formula1.Contracts.Dtos;
 using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Formula1.Application.Handlers;
+namespace Formula1.Application.Handlers.QueryHandlers;
 
 public class GetSessionByIdQueryHandler(IApplicationDbContext context)
     : IRequestHandler<GetSessionByIdQuery, SessionDto>
