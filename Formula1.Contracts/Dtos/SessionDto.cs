@@ -8,7 +8,7 @@ public class SessionDto
 
     public SessionTypeDto SessionType { get; set; }
 
-    public RaceDto Race { get; set; }
+    public RaceBasicDto Race { get; set; }
 
     public ICollection<ResultBasicDto> Results { get; set; }
 }

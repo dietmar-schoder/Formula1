@@ -17,10 +17,10 @@ public class ImportCircuitsCommandHandler(IApplicationDbContext context, IErgast
     public async Task<Unit> Handle(ImportCircuitsCommand request, CancellationToken cancellationToken)
     {
         var dbCircuits = await _context.FORMULA1_Circuits.ToDictionaryAsync(e => e.ErgastCircuitId, cancellationToken);
-        foreach (var circuit in await _ergastApisClient.GetCircuitsAsync())
+        foreach (var importCircuit in await _ergastApisClient.GetCircuitsAsync())
         {
-            dbCircuits.TryGetValue(circuit.circuitId, out var existingEntity);
-            UpdateDbCircuit(existingEntity ?? (await _context.FORMULA1_Circuits.AddAsync(new DbCircuit(Guid.NewGuid()), cancellationToken)).Entity, circuit);
+            dbCircuits.TryGetValue(importCircuit.circuitId, out var existingCircuit);
+            UpdateDbCircuit(existingCircuit ?? (await _context.FORMULA1_Circuits.AddAsync(new DbCircuit(Guid.NewGuid()), cancellationToken)).Entity, importCircuit);
         }
         await _context.SaveChangesAsync(cancellationToken);
         return Unit.Value;

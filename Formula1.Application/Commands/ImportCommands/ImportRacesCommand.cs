@@ -1,9 +1,8 @@
 ﻿using MediatR;
 
-namespace Formula1.Application.Commands.ImportCommands
+namespace Formula1.Application.Commands.ImportCommands;
+
+public class ImportRacesCommand(int year) : IRequest<Unit>
 {
-    public class ImportRacesCommand : IRequest<Unit>
-    {
-        public ImportRacesCommand() { }
-    }
+    public int Year { get; set; } = year;
 }

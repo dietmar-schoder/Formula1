@@ -1,12 +1,8 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public class RaceDto
+public class RaceDto : RaceBasicDto
 {
-    public Guid Id { get; set; }
+    public SeasonBasicDto Season { get; set; }
 
-    public int SeasonYear { get; set; }
-
-    public int Round { get; set; }
-
-    public CircuitDto Circuit { get; set; }
+    public CircuitBasicDto Circuit { get; set; }
 }

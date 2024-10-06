@@ -10,6 +10,11 @@ Accept: application/json
 POST {{Formula1.Api_HostAddress}}/api/races
 Accept: application/json
 
+###
+
+POST {{Formula1.Api_HostAddress}}/api/races/2021
+Accept: application/json
+
 ### Seasons
 
 POST {{Formula1.Api_HostAddress}}/api/seasons

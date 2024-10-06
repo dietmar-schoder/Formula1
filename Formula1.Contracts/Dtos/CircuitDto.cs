@@ -1,10 +1,6 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public class CircuitDto
+public class CircuitDto : CircuitBasicDto
 {
-    public Guid Id { get; set; }
-
-    public string Name { get; set; }
-
-    public string ErgastCircuitId { get; set; }
+    public ICollection<RaceBasicDto> Races { get; set; }
 }

@@ -1,10 +1,6 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public class SeasonDto
+public class SeasonDto : SeasonBasicDto
 {
-    public int Year { get; set; }
-
-    public string WikipediaUrl { get; set; }
-
-    public ICollection<RaceDto> Races { get; set; }
+    public ICollection<RaceBasicDto> Races { get; set; }
 }

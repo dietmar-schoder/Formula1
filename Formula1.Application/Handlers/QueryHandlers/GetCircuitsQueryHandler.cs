@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 namespace Formula1.Application.Handlers.QueryHandlers;
 
 public class GetCircuitsQueryHandler(IApplicationDbContext context)
-    : IRequestHandler<GetCircuitsQuery, List<CircuitDto>>
+    : IRequestHandler<GetCircuitsQuery, List<CircuitBasicDto>>
 {
     private readonly IApplicationDbContext _context = context;
 
-    public async Task<List<CircuitDto>> Handle(GetCircuitsQuery request, CancellationToken cancellationToken)
+    public async Task<List<CircuitBasicDto>> Handle(GetCircuitsQuery request, CancellationToken cancellationToken)
         => (await _context.FORMULA1_Circuits
             .AsNoTracking()
             .OrderBy(e => e.Name)
             .ToListAsync(cancellationToken))
-            .Adapt<List<CircuitDto>>();
+            .Adapt<List<CircuitBasicDto>>();
 }
