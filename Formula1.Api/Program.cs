@@ -32,6 +32,7 @@ var app = builder.Build();
 app.MapAliveEndpoints();
 app.MapCircuitsEndpoints();
 app.MapConstructorsEndpoints();
+app.MapDriversEndpoints();
 app.MapRacesEndpoints();
 app.MapSeasonsEndpoints();
 app.MapSessionsEndpoints();

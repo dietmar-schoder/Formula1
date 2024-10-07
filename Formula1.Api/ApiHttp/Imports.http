@@ -10,9 +10,19 @@ Content-Type: application/json
 POST {{Formula1.Api_HostAddress}}/api/constructors
 Content-Type: application/json
 {
-  "fromYear": 2023,
+  "fromYear": 2024,
   "toYear": 9999
 }
+
+### Drivers
+
+POST {{Formula1.Api_HostAddress}}/api/drivers
+Content-Type: application/json
+{
+  "fromYear": 2024,
+  "toYear": 9999
+}
+
 ### Races
 
 POST {{Formula1.Api_HostAddress}}/api/races

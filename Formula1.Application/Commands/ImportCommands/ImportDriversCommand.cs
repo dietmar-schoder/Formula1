@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Formula1.Application.Commands.ImportCommands;
 
-public class ImportConstructorsCommand(ImportRequest importRequest) : IRequest<ImportResponse>
+public class ImportDriversCommand(ImportRequest importRequest) : IRequest<ImportResponse>
 {
     public int FromYear { get; set; } = importRequest.FromYear;
     public int ToYear { get; set; } = importRequest.ToYear;
