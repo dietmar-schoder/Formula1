@@ -7,4 +7,6 @@ public class Constructor
     public string Name { get; set; }
 
     public ICollection<Result> Results { get; set; }
+
+    public static Constructor Create() => new() { Id = Guid.NewGuid() };
 }

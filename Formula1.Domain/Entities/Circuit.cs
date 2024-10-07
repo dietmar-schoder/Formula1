@@ -10,7 +10,5 @@ public class Circuit
 
     public ICollection<Race> Races { get; set; }
 
-    public Circuit() { }
-
-    public Circuit(Guid id) => Id = id;
+    public static Circuit Create() => new() { Id = Guid.NewGuid() };
 }

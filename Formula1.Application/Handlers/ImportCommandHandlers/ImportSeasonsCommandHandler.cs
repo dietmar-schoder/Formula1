@@ -16,19 +16,20 @@ public class ImportSeasonsCommandHandler(IApplicationDbContext context, IErgastA
 
     public async Task<Unit> Handle(ImportSeasonsCommand request, CancellationToken cancellationToken)
     {
-        var dbSeasons = await _context.FORMULA1_Seasons.ToDictionaryAsync(e => e.Year, cancellationToken);
+        var seasons = await _context.FORMULA1_Seasons.ToDictionaryAsync(e => e.Year, cancellationToken);
         foreach (var importSeason in await _ergastApisClient.GetSeasonsAsync())
         {
             var year = int.Parse(importSeason.season);
-            dbSeasons.TryGetValue(year, out var existingSeason);
-            UpdateDbSeason(existingSeason ?? (await _context.FORMULA1_Seasons.AddAsync(new DbSeason(year), cancellationToken)).Entity, importSeason);
+            seasons.TryGetValue(year, out var existingSeason);
+            UpdateSeason(existingSeason ?? await NewSeason(context, cancellationToken, year), importSeason);
         }
         await _context.SaveChangesAsync(cancellationToken);
         return Unit.Value;
 
-        static void UpdateDbSeason(DbSeason dbSeason, Season importSeason)
-        {
-            dbSeason.WikipediaUrl = importSeason.url;
-        }
+        static void UpdateSeason(DbSeason season, Season importSeason)
+            => season.WikipediaUrl = importSeason.url;
+
+        static async Task<DbSeason> NewSeason(IApplicationDbContext context, CancellationToken cancellationToken, int year)
+            => (await context.FORMULA1_Seasons.AddAsync(DbSeason.Create(year), cancellationToken)).Entity;
     }
 }

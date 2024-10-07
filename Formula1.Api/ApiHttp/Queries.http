@@ -7,12 +7,12 @@ Accept: application/json
 
 ### 
 
-GET {{Formula1.Api_HostAddress}}/api/circuits/a107153f-246e-4c77-b08a-0809f13b4f2f
+GET {{Formula1.Api_HostAddress}}/api/circuits/59efb2a4-be7a-46c0-9e70-551d5e5beb92
 Accept: application/json
 
 ### Races
 
-GET {{Formula1.Api_HostAddress}}/api/races/35DD85CB-9399-4A03-A55D-3D77BB8CFD18
+GET {{Formula1.Api_HostAddress}}/api/races/c0d82c1b-849c-4f75-b14f-c70f57df9f82
 Accept: application/json
 
 ### Seasons

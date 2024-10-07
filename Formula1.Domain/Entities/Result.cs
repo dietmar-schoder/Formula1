@@ -16,4 +16,6 @@ public class Result
 
     public Guid ConstructorId { get; set; }
     public Constructor Constructor { get; set; }
+
+    public static Result Create() => new() { Id = Guid.NewGuid() };
 }

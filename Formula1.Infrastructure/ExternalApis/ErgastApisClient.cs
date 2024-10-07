@@ -8,8 +8,6 @@ public class ErgastApisClient(HttpClient client) : IErgastApisClient
 {
     private readonly HttpClient _client = client;
 
-    public string BaseAddress => _client.BaseAddress?.AbsoluteUri;
-
     public async Task<List<Circuit>> GetCircuitsAsync()
     {
         var response = await _client.GetAsync("api/f1/circuits.json?limit=100");

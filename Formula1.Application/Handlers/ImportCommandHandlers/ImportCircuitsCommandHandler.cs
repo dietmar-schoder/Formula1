@@ -16,19 +16,22 @@ public class ImportCircuitsCommandHandler(IApplicationDbContext context, IErgast
 
     public async Task<Unit> Handle(ImportCircuitsCommand request, CancellationToken cancellationToken)
     {
-        var dbCircuits = await _context.FORMULA1_Circuits.ToDictionaryAsync(e => e.ErgastCircuitId, cancellationToken);
+        var circuits = await _context.FORMULA1_Circuits.ToDictionaryAsync(e => e.ErgastCircuitId, cancellationToken);
         foreach (var importCircuit in await _ergastApisClient.GetCircuitsAsync())
         {
-            dbCircuits.TryGetValue(importCircuit.circuitId, out var existingCircuit);
-            UpdateDbCircuit(existingCircuit ?? (await _context.FORMULA1_Circuits.AddAsync(new DbCircuit(Guid.NewGuid()), cancellationToken)).Entity, importCircuit);
+            circuits.TryGetValue(importCircuit.circuitId, out var existingCircuit);
+            UpdateCircuit(existingCircuit ?? await NewCircuit(_context, cancellationToken), importCircuit);
         }
         await _context.SaveChangesAsync(cancellationToken);
         return Unit.Value;
 
-        static void UpdateDbCircuit(DbCircuit dbCircuit, Circuit circuit)
+        static void UpdateCircuit(DbCircuit circuit, Circuit importCircuit)
         {
-            dbCircuit.ErgastCircuitId = circuit.circuitId;
-            dbCircuit.Name = circuit.circuitName;
+            circuit.ErgastCircuitId = importCircuit.circuitId;
+            circuit.Name = importCircuit.circuitName;
         }
+
+        static async Task<DbCircuit> NewCircuit(IApplicationDbContext context, CancellationToken cancellationToken)
+            => (await context.FORMULA1_Circuits.AddAsync(DbCircuit.Create(), cancellationToken)).Entity;
     }
 }

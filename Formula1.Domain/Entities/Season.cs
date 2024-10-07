@@ -8,8 +8,6 @@
 
         public ICollection<Race> Races { get; set; }
 
-        public Season() { }
-
-        public Season(int year) => Year = year;
+        public static Season Create(int year) => new() { Year = year };
     }
 }

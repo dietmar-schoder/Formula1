@@ -12,7 +12,5 @@ public class Race
     public Guid CircuitId { get; set; }
     public Circuit Circuit { get; set; }
 
-    public Race() { }
-
-    public Race(Guid id) => Id = id;
+    public static Race Create() => new() { Id = Guid.NewGuid() };
 }

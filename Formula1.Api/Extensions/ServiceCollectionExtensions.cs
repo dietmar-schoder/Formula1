@@ -10,9 +10,14 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddSingleton<IHtmlScraper, HtmlScraper>();
         services.AddHttpClient<IErgastApisClient, ErgastApisClient>(client =>
         {
-            client.BaseAddress = new Uri("https://ergast.com"); // https://ergast.com
+            client.BaseAddress = new Uri("https://ergast.com");
+        });
+        services.AddHttpClient<IF1Client, F1Client>(client =>
+        {
+            client.BaseAddress = new Uri("https://www.formula1.com");
         });
 
         return services;
