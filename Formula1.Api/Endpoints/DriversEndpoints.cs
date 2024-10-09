@@ -1,4 +1,5 @@
 ﻿using Formula1.Application.Commands.ImportCommands;
+using Formula1.Application.Queries;
 using Formula1.Contracts.Requests;
 using MediatR;
 
@@ -10,6 +11,12 @@ public static class DriversEndpoints
     {
         //app.MapGet("/api/constructors", ListConstructorsAsync);
         //app.MapGet("/api/constructors/{id:guid}", GetConstructorAsync);
+        app.MapGet("/api/drivers", async (IMediator mediator) =>
+        {
+            var query = new GetDriversQuery();
+            var drivers = await mediator.Send(query);
+            return Results.Ok(drivers);
+        });
         app.MapPost("/api/drivers", ImportDriversAsync);
 
         //static async Task<IResult> ListConstructorsAsync(IMediator mediator)

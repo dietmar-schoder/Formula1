@@ -20,6 +20,10 @@ Accept: application/json
 GET {{Formula1.Api_HostAddress}}/api/constructors/49a362a2-4f4c-4a82-b32a-b95a2219a8c9
 Accept: application/json
 
+### Drivers
+
+GET {{Formula1.Api_HostAddress}}/api/drivers
+
 ### Races
 
 GET {{Formula1.Api_HostAddress}}/api/races/c0d82c1b-849c-4f75-b14f-c70f57df9f82
