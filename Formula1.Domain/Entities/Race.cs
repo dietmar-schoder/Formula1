@@ -12,5 +12,8 @@ public class Race
     public Guid CircuitId { get; set; }
     public Circuit Circuit { get; set; }
 
+    public Guid GrandPrixId { get; set; }
+    public GrandPrix GrandPRix { get; set; }
+
     public static Race Create() => new() { Id = Guid.NewGuid() };
 }
