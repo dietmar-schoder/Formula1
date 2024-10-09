@@ -7,5 +7,7 @@ namespace Formula1.Contracts.Services
         Task<List<F1Constructor>> GetConstructorsAsync(int year);
 
         Task<List<F1Driver>> GetDriversAsync(int year);
+
+        Task<List<F1GrandPrix>> GetGrandPrixAsync(int year);
     }
 }
