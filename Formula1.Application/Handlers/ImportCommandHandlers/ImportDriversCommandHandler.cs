@@ -7,10 +7,8 @@ using Formula1.Domain.Common.Interfaces;
 using Formula1.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 namespace Formula1.Application.Handlers.ImportCommandHandlers;
 
@@ -29,6 +27,7 @@ public class ImportDriversCommandHandler(
         var response = new ImportResponse(request.GetType().Name, request.FromYear, request.ToYear);
         var drivers = await _context.FORMULA1_Drivers.ToDictionaryAsync(e => e.Name, cancellationToken);
         var importDrivers = new Dictionary<string, F1Driver>();
+
         response.RowsInDatabase += drivers.Count;
         await _dateTimeProvider.ForAllYears(request.FromYear, request.ToYear, async year =>
         {

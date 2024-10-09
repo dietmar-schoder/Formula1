@@ -18,4 +18,9 @@ public class F1Client(HttpClient client, IHtmlScraper htmlScraper) : IF1Client
         => (await _htmlScraper.GetHtmlTable(_client, $"/en/results/{year}/drivers"))
             .Select(row => new F1Driver { Name = _htmlScraper.GetColumn(row, 2) })
             .ToList();
+
+    public async Task<List<F1GrandPrix>> GetGrandPrixAsync(int year)
+        => (await _htmlScraper.GetHtmlTable(_client, $"/en/results/{year}/races"))
+            .Select(row => new F1GrandPrix { Name = _htmlScraper.GetColumn(row, 1) })
+            .ToList();
 }

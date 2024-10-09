@@ -33,6 +33,7 @@ app.MapAliveEndpoints();
 app.MapCircuitsEndpoints();
 app.MapConstructorsEndpoints();
 app.MapDriversEndpoints();
+app.MapGrandPrixEndpoints();
 app.MapRacesEndpoints();
 app.MapSeasonsEndpoints();
 app.MapSessionsEndpoints();
