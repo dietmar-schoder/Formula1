@@ -9,21 +9,15 @@ public static class DriversEndpoints
 {
     public static void MapDriversEndpoints(this IEndpointRouteBuilder app)
     {
-        //app.MapGet("/api/constructors", ListConstructorsAsync);
-        //app.MapGet("/api/constructors/{id:guid}", GetConstructorAsync);
-        app.MapGet("/api/drivers", async (IMediator mediator) =>
-        {
-            var query = new GetDriversQuery();
-            var drivers = await mediator.Send(query);
-            return Results.Ok(drivers);
-        });
+        app.MapGet("/api/drivers", ListDriversAsync);
+        //app.MapGet("/api/drivers/{id:guid}", GetDriverAsync);
         app.MapPost("/api/drivers", ImportDriversAsync);
 
-        //static async Task<IResult> ListConstructorsAsync(IMediator mediator)
-        //    => Results.Ok(await mediator.Send(new GetConstructorsQuery()));
+        static async Task<IResult> ListDriversAsync(IMediator mediator)
+            => Results.Ok(await mediator.Send(new GetDriversQuery()));
 
-        //static async Task<IResult> GetConstructorAsync(Guid id, IMediator mediator)
-        //    => Results.Ok(await mediator.Send(new GetConstructorByIdQuery(id)));
+        //static async Task<IResult> GetDriverAsync(Guid id, IMediator mediator)
+        //    => Results.Ok(await mediator.Send(new GetGetDriverByIdQuery(id)));
 
         static async Task<IResult> ImportDriversAsync(ImportRequest request, IMediator mediator)
             => Results.Ok(await mediator.Send(new ImportDriversCommand(request)));
