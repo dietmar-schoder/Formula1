@@ -17,6 +17,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<Driver> FORMULA1_Drivers { get; set; }
 
+    public DbSet<GrandPrix> FORMULA1_GrandPrix { get; set; }
+
     public DbSet<Race> FORMULA1_Races { get; set; }
 
     public DbSet<Result> FORMULA1_Results { get; set; }
@@ -35,6 +37,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         CircuitConfiguration.Configure(modelBuilder.Entity<Circuit>());
         ConstructorConfiguration.Configure(modelBuilder.Entity<Constructor>());
         DriverConfiguration.Configure(modelBuilder.Entity<Driver>());
+        GrandPrixConfiguration.Configure(modelBuilder.Entity<GrandPrix>());
         RaceConfiguration.Configure(modelBuilder.Entity<Race>());
         ResultConfiguration.Configure(modelBuilder.Entity<Result>());
         SeasonConfiguration.Configure(modelBuilder.Entity<Season>());

@@ -11,6 +11,8 @@ public interface IApplicationDbContext
 
     public DbSet<Driver> FORMULA1_Drivers { get; set; }
 
+    public DbSet<GrandPrix> FORMULA1_GrandPrix { get; set; }
+
     public DbSet<Race> FORMULA1_Races { get; set; }
 
     public DbSet<Result> FORMULA1_Results { get; set; }
