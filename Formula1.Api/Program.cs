@@ -2,6 +2,7 @@ using Formula1.Api.Endpoints;
 using Formula1.Api.Extensions;
 using Formula1.Application.Handlers.QueryHandlers;
 using Formula1.Application.Interfaces.Persistence;
+using Formula1.Infrastructure.Middlewares;
 using Formula1.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,9 @@ builder.Services.AddInfrastructureServices();
 #region Build
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalHttpRequestMiddleware>();
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseSwagger(options =>
 {
