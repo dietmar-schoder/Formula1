@@ -1,32 +1,27 @@
 ﻿using Formula1.Application.Interfaces.Persistence;
+using Formula1.Application.Interfaces.Services;
 using Formula1.Application.Queries;
 using Formula1.Contracts.Dtos;
+using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Formula1.Application.Handlers.QueryHandlers
 {
-    public class GetDriversQueryHandler : IRequestHandler<GetDriversQuery, List<DriverBasicDto>>
+    public class GetDriversQueryHandler(
+        IApplicationDbContext context,
+        IScopedLogService logService)
+        : HandlerBase(context, logService), IRequestHandler<GetDriversQuery, List<DriverBasicDto>>
     {
-        private readonly IApplicationDbContext _context;
-
-        public GetDriversQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-
         public async Task<List<DriverBasicDto>> Handle(GetDriversQuery request, CancellationToken cancellationToken)
         {
+            _logService.Log();
             var drivers = await _context.FORMULA1_Drivers
-                .Select(d => new DriverBasicDto
-                {
-                    Id = d.Id,
-                    Name = d.Name
-                })
-                .OrderBy(d => d.Name)
+                .AsNoTracking()
+                .OrderBy(e => e.Name)
                 .ToListAsync(cancellationToken);
-
-            return drivers;
+            _logService.Log(drivers.Count.ToString(), nameof(drivers.Count));
+            return drivers.Adapt<List<DriverBasicDto>>();
         }
     }
 }

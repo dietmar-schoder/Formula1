@@ -1,7 +1,7 @@
 using Formula1.Api.Endpoints;
 using Formula1.Api.Extensions;
+using Formula1.Application.Handlers.QueryHandlers;
 using Formula1.Application.Interfaces.Persistence;
-using Formula1.Application.Queries;
 using Formula1.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;

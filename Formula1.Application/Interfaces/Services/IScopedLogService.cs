@@ -5,8 +5,8 @@ namespace Formula1.Application.Interfaces.Services;
 public interface IScopedLogService
 {
     void Log(
-        string var,
         string message = "",
+        string var = "",
         [CallerMemberName] string callerMethod = "",
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int callerLine = 0);

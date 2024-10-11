@@ -9,15 +9,15 @@ public class ScopedLogService : IScopedLogService
     private readonly Queue<string> _logQueue = new();
     
     public void Log(
-        string var,
         string message = "",
+        string var = "",
         [CallerMemberName] string callerMethod = "",
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int callerLine = 0)
     {
         var = var.IsNullOrEmpty() ? string.Empty : $"{var}: "; 
         string className = Path.GetFileNameWithoutExtension(callerFile);
-        string logEntry = $"[{className}.{callerMethod}() Line {callerLine}] {var}'{message}'";
+        string logEntry = $"{className}.{callerMethod}() - Line {callerLine} [{var}'{message}']";
         _logQueue.Enqueue(logEntry);
     }
 

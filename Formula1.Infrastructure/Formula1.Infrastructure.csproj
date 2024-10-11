@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ExternalApis\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
