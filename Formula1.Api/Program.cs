@@ -1,7 +1,8 @@
 using Formula1.Api.Endpoints;
 using Formula1.Api.Extensions;
+using Formula1.Application.Handlers.QueryHandlers;
 using Formula1.Application.Interfaces.Persistence;
-using Formula1.Application.Queries;
+using Formula1.Infrastructure.Middlewares;
 using Formula1.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,6 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Formula 1 API Reference", Version = "1.0" });
 });
-
 builder.Services.Configure<JsonOptions>(options =>
 {
     options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
@@ -35,6 +35,9 @@ builder.Services.AddInfrastructureServices();
 #region Build
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalHttpRequestMiddleware>();
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseSwagger(options =>
 {

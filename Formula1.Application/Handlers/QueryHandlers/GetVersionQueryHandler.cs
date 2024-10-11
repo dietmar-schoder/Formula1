@@ -1,18 +1,29 @@
-﻿using Formula1.Contracts.Responses;
+﻿using Formula1.Application.Interfaces.Services;
+using Formula1.Application.Queries;
+using Formula1.Contracts.Responses;
 using Formula1.Domain.Common.Interfaces;
 using MediatR;
 using System.Reflection;
 
-namespace Formula1.Application.Queries;
+namespace Formula1.Application.Handlers.QueryHandlers;
 
-public class GetVersionQueryHandler(IDateTimeProvider dateTimeProvider) : IRequestHandler<GetVersionQuery, Alive>
+public class GetVersionQueryHandler(
+    IDateTimeProvider dateTimeProvider,
+    IScopedLogService logService)
+    : IRequestHandler<GetVersionQuery, Alive>
 {
     private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
+    private readonly IScopedLogService _logService = logService;
 
     public Task<Alive> Handle(GetVersionQuery request, CancellationToken cancellationToken)
-        => Task.FromResult(new Alive
+    {
+        _logService.Log();
+        var alive = new Alive
         {
             UtcNow = _dateTimeProvider.UtcNow,
             Version = Assembly.GetEntryAssembly().GetName().Version.ToString()
-        });
+        };
+        _logService.Log(alive.Version, nameof(alive.Version));
+        return Task.FromResult(alive);
+    }
 }

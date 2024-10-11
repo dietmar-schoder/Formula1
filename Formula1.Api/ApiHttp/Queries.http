@@ -1,5 +1,10 @@
 @Formula1.Api_HostAddress = https://localhost:7277
 
+### Alive
+
+GET {{Formula1.Api_HostAddress}}/api
+Accept: application/json
+
 ### Circuits
 
 GET {{Formula1.Api_HostAddress}}/api/circuits
@@ -17,7 +22,7 @@ Accept: application/json
 
 ### Constructor
 
-GET {{Formula1.Api_HostAddress}}/api/constructors/49a362a2-4f4c-4a82-b32a-b95a2219a8c9
+GET {{Formula1.Api_HostAddress}}/api/constructors/3f85c446-6b80-493c-8dd9-51b918ad3beb
 Accept: application/json
 
 ### Drivers

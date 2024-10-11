@@ -1,4 +1,5 @@
 ﻿using Formula1.Application.Interfaces.Persistence;
+using Formula1.Application.Interfaces.Services;
 using Formula1.Application.Queries;
 using Formula1.Contracts.Dtos;
 using Mapster;
@@ -7,16 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Formula1.Application.Handlers.QueryHandlers;
 
-public class GetSeasonByYearQueryHandler(IApplicationDbContext context)
-    : IRequestHandler<GetSeasonByYearQuery, SeasonDto>
+public class GetSeasonByYearQueryHandler(
+    IApplicationDbContext context,
+    IScopedLogService logService)
+    : HandlerBase(context, logService), IRequestHandler<GetSeasonByYearQuery, SeasonDto>
 {
-    private readonly IApplicationDbContext _context = context;
-
     public async Task<SeasonDto> Handle(GetSeasonByYearQuery request, CancellationToken cancellationToken)
-        => (await _context.FORMULA1_Seasons
+    {
+        _logService.Log(request.Year.ToString(), nameof(request.Year));
+        var season = await _context.FORMULA1_Seasons
             .AsNoTracking()
             .Include(s => s.Races.OrderBy(r => r.Round))
                 .ThenInclude(r => r.Circuit)
-            .SingleOrDefaultAsync(s => s.Year == request.Year, cancellationToken))?
-            .Adapt<SeasonDto>();
+            .SingleOrDefaultAsync(s => s.Year == request.Year, cancellationToken)
+            ?? throw new Exception("404");
+        _logService.Log(season.Year.ToString(), nameof(season.Year));
+        return season.Adapt<SeasonDto>();
+    }
 }
