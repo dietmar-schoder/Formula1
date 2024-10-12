@@ -14,6 +14,9 @@ public static class SeasonsEndpoints
             => Results.Ok(await mediator.Send(new GetSeasonsQuery()));
 
         static async Task<IResult> GetSeasonAsync(int year, IMediator mediator)
-            => Results.Ok(await mediator.Send(new GetSeasonByYearQuery(year)));
+        {
+            Console.WriteLine("START");
+            return Results.Ok(await mediator.Send(new GetSeasonByYearQuery(year)));
+        }
     }
 }
