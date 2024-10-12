@@ -16,7 +16,7 @@ public class GetSessionByIdQueryHandler(
 {
     public async Task<SessionDto> Handle(GetSessionByIdQuery request, CancellationToken cancellationToken)
     {
-        _logService.Log(request.Id.ToString(), nameof(request.Id));
+        Log(request.Id.ToString(), nameof(request.Id));
         var session = await _context.FORMULA1_Sessions
             .AsNoTracking()
             .Include(e => e.Results)
@@ -24,8 +24,8 @@ public class GetSessionByIdQueryHandler(
             .Include(e => e.Race)
             .ThenInclude(e => e.Circuit)
             .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? throw new Exception("404");
-        _logService.Log(session.Id.ToString(), nameof(session.Id));
+            ?? ThrowNotFoundError<Session>(request.Id.ToString());
+        Log(session.Id.ToString(), nameof(session.Id));
         return session.Adapt<SessionDto>();
     }
 }

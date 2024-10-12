@@ -2,6 +2,7 @@
 using Formula1.Application.Interfaces.Services;
 using Formula1.Application.Queries;
 using Formula1.Contracts.Dtos;
+using Formula1.Domain.Entities;
 using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,14 +16,14 @@ public class GetSeasonByYearQueryHandler(
 {
     public async Task<SeasonDto> Handle(GetSeasonByYearQuery request, CancellationToken cancellationToken)
     {
-        _logService.Log(request.Year.ToString(), nameof(request.Year));
+        Log(request.Year.ToString(), nameof(request.Year));
         var season = await _context.FORMULA1_Seasons
             .AsNoTracking()
             .Include(s => s.Races.OrderBy(r => r.Round))
                 .ThenInclude(r => r.Circuit)
             .SingleOrDefaultAsync(s => s.Year == request.Year, cancellationToken)
-            ?? throw new Exception("404");
-        _logService.Log(season.Year.ToString(), nameof(season.Year));
+            ?? ThrowNotFoundError<Season>(request.Year.ToString());
+        Log(season.Year.ToString(), nameof(season.Year));
         return season.Adapt<SeasonDto>();
     }
 }
