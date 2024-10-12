@@ -11,5 +11,15 @@ public interface IScopedLogService
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int callerLine = 0);
 
-    List<string> GetLogs();
+    List<string> GetLogsAsList();
+
+    string GetLogsAsString(string title);
+
+    void AddText(string text);
+
+    void ThrowError(int statusCode, string message);
+
+    T ThrowNotFoundError<T>(string key) where T : class;
+
+    void ThrowException();
 }

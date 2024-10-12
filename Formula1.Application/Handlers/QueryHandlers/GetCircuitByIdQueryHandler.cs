@@ -2,6 +2,7 @@
 using Formula1.Application.Interfaces.Services;
 using Formula1.Application.Queries;
 using Formula1.Contracts.Dtos;
+using Formula1.Domain.Entities;
 using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,13 +16,15 @@ public class GetCircuitByIdQueryHandler(
 {
     public async Task<CircuitDto> Handle(GetCircuitByIdQuery request, CancellationToken cancellationToken)
     {
-        _logService.Log(request.Id.ToString(), nameof(request.Id));
+        Log(request.Id.ToString(), nameof(request.Id));
+        //var zero = 0;
+        //var y = 1 / zero;
         var circuit = await _context.FORMULA1_Circuits
             .AsNoTracking()
             .Include(e => e.Races.OrderBy(r => r.SeasonYear))
             .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? throw new Exception("404");
-        _logService.Log(circuit.Id.ToString(), nameof(circuit.Id));
+            ?? ThrowNotFoundError<Circuit>(request.Id.ToString());
+        Log(circuit.Id.ToString(), nameof(circuit.Id));
         return circuit.Adapt<CircuitDto>();
     }
 }

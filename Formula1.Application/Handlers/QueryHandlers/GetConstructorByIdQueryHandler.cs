@@ -3,7 +3,6 @@ using Formula1.Application.Interfaces.Services;
 using Formula1.Application.Queries;
 using Formula1.Contracts.Dtos;
 using Formula1.Domain.Entities;
-using Formula1.Domain.Exceptions;
 using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

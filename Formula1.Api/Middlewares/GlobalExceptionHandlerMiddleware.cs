@@ -1,4 +1,5 @@
 ﻿using Formula1.Application.Interfaces.Services;
+using Formula1.Contracts.ExternalServices;
 using Formula1.Contracts.Responses;
 using Formula1.Domain.Exceptions;
 using System.Diagnostics;
@@ -6,40 +7,58 @@ using System.Text.Json;
 
 namespace Formula1.Api.Middlewares;
 
-public class GlobalExceptionHandlerMiddleware(RequestDelegate next)
+public class GlobalExceptionHandlerMiddleware(
+    RequestDelegate next,
+    IHostEnvironment env)
 {
     private readonly RequestDelegate _next = next;
+    private readonly IHostEnvironment _env = env;
 
-    public async Task InvokeAsync(HttpContext context, IScopedLogService logService)
+    public async Task InvokeAsync(
+        HttpContext context,
+        IScopedLogService logService,
+        ISlackClient slackClient)
     {
         try
         {
             await _next(context);
         }
-        catch (UserException ex)
+        catch (UserError ex)
         {
-            await WriteErrorResponseAsync(context, ex.StatusCode, ex.Message);
+            await WriteErrorResponseAsync(context, ex.StatusCode, new ErrorResponse(ex.Message));
         }
         catch (Exception ex)
         {
-            Debug.WriteLine(string.Empty);
-            Debug.WriteLine($"==> Exception: {ex.Message}");
-            var logs = logService.GetLogs();
-            for (int i = 0; i < logs.Count; i++)
+            logService.AddText(ex.Source);
+            logService.AddText(ex.StackTrace);
+            var errorTextBlock = logService.GetLogsAsString(ex.Message);
+            ErrorResponse responseBody = null;
+            if (_env.IsDevelopment())
             {
-                Debug.WriteLine($"==> {i + 1}. {logs[i]}");
+                WriteToConsole(errorTextBlock);
+                responseBody = new ErrorResponse(ex.Message, logService.GetLogsAsList());
             }
-            Debug.WriteLine(string.Empty);
-
-            await WriteErrorResponseAsync(context, StatusCodes.Status500InternalServerError, ex.Message);
+            else
+            {
+                slackClient.SendMessage($":boom: EXCEPTION: {errorTextBlock}");
+            }
+            await WriteErrorResponseAsync(context, StatusCodes.Status500InternalServerError, responseBody);
         }
 
-        static async Task WriteErrorResponseAsync(HttpContext context, int statusCode, string errorMessage)
+        static async Task WriteErrorResponseAsync(HttpContext context, int statusCode, ErrorResponse responseBody)
         {
-            var body = string.IsNullOrEmpty(errorMessage) ? string.Empty : JsonSerializer.Serialize(new ErrorResponse(errorMessage));
             context.Response.StatusCode = statusCode;
             context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(body);
+            await context.Response.WriteAsync(responseBody is null ? string.Empty : JsonSerializer.Serialize(responseBody));
+        }
+
+        static void WriteToConsole(string message)
+        {
+            Debug.WriteLine(string.Empty);
+            Debug.WriteLine("== ERROR ==");
+            Debug.WriteLine(message);
+            Debug.WriteLine("===========");
+            Debug.WriteLine(string.Empty);
         }
     }
 }
