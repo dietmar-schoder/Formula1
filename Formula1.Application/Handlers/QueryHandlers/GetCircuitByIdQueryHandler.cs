@@ -17,8 +17,6 @@ public class GetCircuitByIdQueryHandler(
     public async Task<CircuitDto> Handle(GetCircuitByIdQuery request, CancellationToken cancellationToken)
     {
         Log(request.Id.ToString(), nameof(request.Id));
-        //var zero = 0;
-        //var y = 1 / zero;
         var circuit = await _context.FORMULA1_Circuits
             .AsNoTracking()
             .Include(e => e.Races.OrderBy(r => r.SeasonYear))

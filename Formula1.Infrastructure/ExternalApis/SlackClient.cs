@@ -15,12 +15,11 @@ public class SlackClient(
 
     public void SendMessage(string message)
     {
-        var webhookUrl = _configuration["SlackUrl"];
         var jsonPayload = JsonSerializer.Serialize(new { text = message });
         var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
         Task.Run(async () =>
         {
-            await _httpClient.PostAsync(webhookUrl, content);
+            await _httpClient.PostAsync(_configuration["SlackUrl"], content);
         });
     }
 }

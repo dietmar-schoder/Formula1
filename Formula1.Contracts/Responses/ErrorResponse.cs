@@ -2,6 +2,8 @@
 
 public class ErrorResponse(string error, List<string> logs = default)
 {
+    public ErrorResponse() : this(default, default) { }
+
     public string Error { get; set; } = error;
 
     public List<string> Logs { get; set; } = logs;

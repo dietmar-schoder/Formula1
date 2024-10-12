@@ -4,6 +4,7 @@ using Formula1.Contracts.Responses;
 using Formula1.Domain.Exceptions;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Formula1.Api.Middlewares;
 
@@ -32,24 +33,28 @@ public class GlobalExceptionHandlerMiddleware(
             logService.AddText(ex.Source);
             logService.AddText(ex.StackTrace);
             var errorTextBlock = logService.GetLogsAsString(ex.Message);
-            ErrorResponse responseBody = null;
             if (_env.IsDevelopment())
             {
                 WriteToConsole(errorTextBlock);
-                responseBody = new ErrorResponse(ex.Message, logService.GetLogsAsList());
+                var responseBody = new ErrorResponse(ex.Message, logService.GetLogsAsList());
+                await WriteErrorResponseAsync(context, StatusCodes.Status500InternalServerError, responseBody);
             }
             else
             {
                 slackClient.SendMessage($":boom: EXCEPTION: {errorTextBlock}");
+                await WriteErrorResponseAsync(context, StatusCodes.Status500InternalServerError, new ErrorResponse());
             }
-            await WriteErrorResponseAsync(context, StatusCodes.Status500InternalServerError, responseBody);
         }
 
         static async Task WriteErrorResponseAsync(HttpContext context, int statusCode, ErrorResponse responseBody)
         {
             context.Response.StatusCode = statusCode;
             context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(responseBody is null ? string.Empty : JsonSerializer.Serialize(responseBody));
+            var options = new JsonSerializerOptions()
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
+            await context.Response.WriteAsync(JsonSerializer.Serialize(responseBody, options));
         }
 
         static void WriteToConsole(string message)

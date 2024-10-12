@@ -1,7 +1,6 @@
 ﻿using Formula1.Application.Interfaces.Services;
 using Formula1.Domain.Exceptions;
 using Microsoft.IdentityModel.Tokens;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Formula1.Infrastructure.Services;
@@ -31,7 +30,7 @@ public class ScopedLogService : IScopedLogService
         => [.. _logs, .. _texts];
 
     public string GetLogsAsString(string title)
-        => string.Join("\r\n", [title, .. _logs, string.Empty, .. _texts]);
+        => string.Join("\r\n", [title, string.Empty, .. _logs, string.Empty, .. _texts]);
 
     public void ThrowError(int statusCode, string message)
         => throw new UserError(statusCode, message);
