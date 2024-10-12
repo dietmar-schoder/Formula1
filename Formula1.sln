@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formula1.Domain", "Formula1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formula1.Infrastructure", "Formula1.Infrastructure\Formula1.Infrastructure.csproj", "{12BF8992-14AF-4538-A56C-CB8FBEFCCF78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formula1.Infrastructure.Tests", "Formula1.Infrastructure.Tests\Formula1.Infrastructure.Tests.csproj", "{CEF1DC58-1CF1-4AF6-96D4-FF4552B27A0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formula1.Infrastructure.Tests", "Formula1.Infrastructure.Tests\Formula1.Infrastructure.Tests.csproj", "{CEF1DC58-1CF1-4AF6-96D4-FF4552B27A0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formula1.Api.Tests", "Formula1.Api.Tests\Formula1.Api.Tests.csproj", "{7367B3D9-0E07-46A6-8FA4-EBA7AEE3D62B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{CEF1DC58-1CF1-4AF6-96D4-FF4552B27A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEF1DC58-1CF1-4AF6-96D4-FF4552B27A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEF1DC58-1CF1-4AF6-96D4-FF4552B27A0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7367B3D9-0E07-46A6-8FA4-EBA7AEE3D62B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7367B3D9-0E07-46A6-8FA4-EBA7AEE3D62B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7367B3D9-0E07-46A6-8FA4-EBA7AEE3D62B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7367B3D9-0E07-46A6-8FA4-EBA7AEE3D62B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Formula1.Application.Queries;
 
-public class GetVersionQuery : IRequest<Alive> { }
+public class GetVersionQuery : IRequest<AliveResponse> { }
