@@ -57,6 +57,7 @@ app.MapConstructorsEndpoints();
 app.MapDriversEndpoints();
 app.MapGrandPrixEndpoints();
 app.MapRacesEndpoints();
+app.MapResultsEndpoints();
 app.MapSeasonsEndpoints();
 app.MapSessionsEndpoints();
 app.MapSessionTypesEndpoints();

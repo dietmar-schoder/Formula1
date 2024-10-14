@@ -9,22 +9,26 @@ using Microsoft.EntityFrameworkCore;
 namespace Formula1.Application.Handlers.QueryHandlers;
 
 public class GetSessionsQueryHandler(
-    IApplicationDbContext context,
-    IScopedLogService logService)
-    : HandlerBase(context, logService), IRequestHandler<GetSessionsQuery, List<SessionDto>>
+    IApplicationDbContext dbContext,
+    IScopedLogService logService,
+    IScopedErrorService errorService)
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSessionsQuery, List<SessionBasicDto>>
 {
-    public async Task<List<SessionDto>> Handle(GetSessionsQuery request, CancellationToken cancellationToken)
+    public async Task<List<SessionBasicDto>> Handle(GetSessionsQuery request, CancellationToken cancellationToken)
     {
-        _logService.Log();
-        var sessions = await _context.FORMULA1_Sessions
+        Log();
+        var sessions = await _dbContext.FORMULA1_Sessions
             .AsNoTracking()
             .Include(s => s.SessionType)
             .Include(s => s.Race)
+            .ThenInclude(r => r.Season)
+            .Include(s => s.Race)
             .ThenInclude(r => r.Circuit)
             .OrderBy(s => s.SessionType)
-            .ThenBy(s => s.Race.Circuit.Name)
+            .ThenByDescending(s => s.Race.SeasonYear)
+            .ThenBy(s => s.Race.Round)
             .ToListAsync(cancellationToken);
-        _logService.Log(sessions.Count.ToString(), nameof(sessions.Count));
-        return sessions.Adapt<List<SessionDto>>();
+        Log(sessions.Count.ToString(), nameof(sessions.Count));
+        return sessions.Adapt<List<SessionBasicDto>>();
     }
 }

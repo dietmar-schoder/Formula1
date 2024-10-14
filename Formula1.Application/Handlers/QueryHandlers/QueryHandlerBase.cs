@@ -5,11 +5,13 @@ using System.Runtime.CompilerServices;
 namespace Formula1.Application.Handlers.QueryHandlers;
 
 public abstract class HandlerBase(
-    IApplicationDbContext context,
-    IScopedLogService logService)
+    IApplicationDbContext dbContext,
+    IScopedLogService logService,
+    IScopedErrorService errorService)
 {
-    protected readonly IApplicationDbContext _context = context;
+    protected readonly IApplicationDbContext _dbContext = dbContext;
     protected readonly IScopedLogService _logService = logService;
+    protected readonly IScopedErrorService _errorService = errorService;
 
     protected void Log(
         string content = "",
@@ -19,12 +21,18 @@ public abstract class HandlerBase(
         [CallerLineNumber] int callerLine = 0)
         => _logService.Log(content, var, callerMethod, callerFile, callerLine);
 
-    protected void ThrowError(int statusCode, string message)
-        => _logService.ThrowError(statusCode, message);
+    protected void AddError(string message)
+        => _errorService.AddError(message);
 
-    protected T ThrowNotFoundError<T>(string key) where T : class
-        => _logService.ThrowNotFoundError<T>(key);
+    protected void AddErrorIf(bool condition, string message)
+        => _errorService.AddErrorIf(condition, message);
 
-    protected void ThrowException()
-        => _logService.ThrowException();
+    public async Task ReturnErrorsIfAny()
+        => await _errorService.ReturnErrorsIfAny();
+
+    public async Task ReturnError(string message, int statusCode = 400)
+        => await _errorService.ReturnError(message, statusCode);
+
+    protected async Task<T> ReturnNotFoundErrorAsync<T>(string key) where T : class
+        => await _errorService.ReturnNotFoundErrorAsync<T>(key);
 }

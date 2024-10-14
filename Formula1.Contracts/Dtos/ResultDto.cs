@@ -1,10 +1,16 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public class ResultDto : ResultBasicDto
+public class ResultDto
 {
-    public SessionDto Session { get; set; }
+    public Guid Id { get; set; }
 
-    //public DriverDto Driver { get; set; }
+    public int Position { get; set; }
 
-    //public ConstructorDto Constructor { get; set; }
+    public TimeSpan Time { get; set; }
+
+    public SessionBasicDto Session { get; set; }
+
+    public DriverBasicDto Driver { get; set; }
+
+    public ConstructorBasicDto Constructor { get; set; }
 }

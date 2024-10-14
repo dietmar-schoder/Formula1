@@ -9,23 +9,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Formula1.Application.Handlers.QueryHandlers;
 
-public class GetRaceByIdQueryHandler(
+public class GetResultByIdQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetRaceByIdQuery, RaceDto>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetResultByIdQuery, ResultDto>
 {
-    public async Task<RaceDto> Handle(GetRaceByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResultDto> Handle(GetResultByIdQuery request, CancellationToken cancellationToken)
     {
         Log(request.Id.ToString(), nameof(request.Id));
-        var race = await _dbContext.FORMULA1_Races
+        var result = await _dbContext.FORMULA1_Results
             .AsNoTracking()
-            .Include(e => e.Season)
-            .Include(e => e.Circuit)
-            .Include(e => e.Sessions.OrderBy(s => s.SessionTypeId))
+            .Include(e => e.Session)
+            .Include(e => e.Driver)
+            .Include(e => e.Constructor)
             .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? await ReturnNotFoundErrorAsync<Race>(request.Id.ToString());
-        Log(race.Id.ToString(), nameof(race.Id));
-        return race.Adapt<RaceDto>();
+            ?? await ReturnNotFoundErrorAsync<Result>(request.Id.ToString());
+        Log(result.Id.ToString(), nameof(result.Id));
+        return result.Adapt<ResultDto>();
     }
 }

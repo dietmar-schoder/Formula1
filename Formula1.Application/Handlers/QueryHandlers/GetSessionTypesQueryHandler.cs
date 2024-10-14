@@ -9,18 +9,19 @@ using Microsoft.EntityFrameworkCore;
 namespace Formula1.Application.Handlers.QueryHandlers;
 
 public class GetSessionTypesQueryHandler(
-    IApplicationDbContext context,
-    IScopedLogService logService)
-    : HandlerBase(context, logService), IRequestHandler<GetSessionTypesQuery, List<SessionTypeDto>>
+    IApplicationDbContext dbContext,
+    IScopedLogService logService,
+    IScopedErrorService errorService)
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSessionTypesQuery, List<SessionTypeDto>>
 {
     public async Task<List<SessionTypeDto>> Handle(GetSessionTypesQuery request, CancellationToken cancellationToken)
     {
-        _logService.Log();
-        var sessionTypes = await _context.FORMULA1_SessionTypes
+        Log();
+        var sessionTypes = await _dbContext.FORMULA1_SessionTypes
             .AsNoTracking()
             .OrderBy(e => e.Id)
             .ToListAsync(cancellationToken);
-        _logService.Log(sessionTypes.Count.ToString(), nameof(sessionTypes.Count));
+        Log(sessionTypes.Count.ToString(), nameof(sessionTypes.Count));
         return sessionTypes.Adapt<List<SessionTypeDto>>();
     }
 }

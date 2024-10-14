@@ -7,4 +7,8 @@ public class RaceBasicDto
     public int SeasonYear { get; set; }
 
     public int Round { get; set; }
+
+    public SeasonBasicDto Season { get; set; }
+
+    public CircuitBasicDto Circuit { get; set; }
 }

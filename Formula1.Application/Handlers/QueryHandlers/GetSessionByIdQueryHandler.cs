@@ -10,21 +10,24 @@ using Microsoft.EntityFrameworkCore;
 namespace Formula1.Application.Handlers.QueryHandlers;
 
 public class GetSessionByIdQueryHandler(
-    IApplicationDbContext context,
-    IScopedLogService logService)
-    : HandlerBase(context, logService), IRequestHandler<GetSessionByIdQuery, SessionDto>
+    IApplicationDbContext dbContext,
+    IScopedLogService logService,
+    IScopedErrorService errorService)
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSessionByIdQuery, SessionDto>
 {
     public async Task<SessionDto> Handle(GetSessionByIdQuery request, CancellationToken cancellationToken)
     {
         Log(request.Id.ToString(), nameof(request.Id));
-        var session = await _context.FORMULA1_Sessions
+        var session = await _dbContext.FORMULA1_Sessions
             .AsNoTracking()
             .Include(e => e.Results)
             .Include(e => e.SessionType)
+            .Include(s => s.Race)
+            .ThenInclude(r => r.Season)
             .Include(e => e.Race)
             .ThenInclude(e => e.Circuit)
             .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? ThrowNotFoundError<Session>(request.Id.ToString());
+            ?? await ReturnNotFoundErrorAsync<Session>(request.Id.ToString());
         Log(session.Id.ToString(), nameof(session.Id));
         return session.Adapt<SessionDto>();
     }

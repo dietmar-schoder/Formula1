@@ -9,18 +9,19 @@ using Microsoft.EntityFrameworkCore;
 namespace Formula1.Application.Handlers.QueryHandlers;
 
 public class GetSeasonsQueryHandler(
-    IApplicationDbContext context,
-    IScopedLogService logService)
-    : HandlerBase(context, logService), IRequestHandler<GetSeasonsQuery, List<SeasonDto>>
+    IApplicationDbContext dbContext,
+    IScopedLogService logService,
+    IScopedErrorService errorService)
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSeasonsQuery, List<SeasonDto>>
 {
     public async Task<List<SeasonDto>> Handle(GetSeasonsQuery request, CancellationToken cancellationToken)
     {
-        _logService.Log();
-        var seasons = await _context.FORMULA1_Seasons
+        Log();
+        var seasons = await _dbContext.FORMULA1_Seasons
             .AsNoTracking()
             .OrderBy(e => e.Year)
             .ToListAsync(cancellationToken);
-        _logService.Log(seasons.Count.ToString(), nameof(seasons.Count));
+        Log(seasons.Count.ToString(), nameof(seasons.Count));
         return seasons.Adapt<List<SeasonDto>>();
     }
 }

@@ -2,7 +2,5 @@
 
 public class RaceDto : RaceBasicDto
 {
-    public SeasonBasicDto Season { get; set; }
-
-    public CircuitBasicDto Circuit { get; set; }
+    public ICollection<SessionBasicDto> Sessions { get; set; }
 }

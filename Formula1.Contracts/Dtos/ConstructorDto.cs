@@ -2,5 +2,5 @@
 
 public class ConstructorDto : ConstructorBasicDto
 {
-    public ICollection<ResultBasicDto> Results { get; set; }
+    public ICollection<ResultDto> Results { get; set; }
 }
