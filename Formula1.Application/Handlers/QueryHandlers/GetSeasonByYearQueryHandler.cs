@@ -10,19 +10,20 @@ using Microsoft.EntityFrameworkCore;
 namespace Formula1.Application.Handlers.QueryHandlers;
 
 public class GetSeasonByYearQueryHandler(
-    IApplicationDbContext context,
-    IScopedLogService logService)
-    : HandlerBase(context, logService), IRequestHandler<GetSeasonByYearQuery, SeasonDto>
+    IApplicationDbContext dbContext,
+    IScopedLogService logService,
+    IScopedErrorService errorService)
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSeasonByYearQuery, SeasonDto>
 {
     public async Task<SeasonDto> Handle(GetSeasonByYearQuery request, CancellationToken cancellationToken)
     {
         Log(request.Year.ToString(), nameof(request.Year));
-        var season = await _context.FORMULA1_Seasons
+        var season = await _dbContext.FORMULA1_Seasons
             .AsNoTracking()
             .Include(s => s.Races.OrderBy(r => r.Round))
                 .ThenInclude(r => r.Circuit)
             .SingleOrDefaultAsync(s => s.Year == request.Year, cancellationToken)
-            ?? ThrowNotFoundError<Season>(request.Year.ToString());
+            ?? await ReturnNotFoundErrorAsync<Season>(request.Year.ToString());
         Log(season.Year.ToString(), nameof(season.Year));
         return season.Adapt<SeasonDto>();
     }

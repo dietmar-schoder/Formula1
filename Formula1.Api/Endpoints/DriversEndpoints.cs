@@ -8,12 +8,12 @@ public static class DriversEndpoints
     public static void MapDriversEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapGet("/api/drivers", ListDriversAsync);
-        //app.MapGet("/api/drivers/{id:guid}", GetDriverAsync);
+        app.MapGet("/api/drivers/{id:guid}", GetDriverAsync);
 
         static async Task<IResult> ListDriversAsync(IMediator mediator)
             => Results.Ok(await mediator.Send(new GetDriversQuery()));
 
-        //static async Task<IResult> GetDriverAsync(Guid id, IMediator mediator)
-        //    => Results.Ok(await mediator.Send(new GetGetDriverByIdQuery(id)));
+        static async Task<IResult> GetDriverAsync(Guid id, IMediator mediator)
+            => Results.Ok(await mediator.Send(new GetDriverByIdQuery(id)));
     }
 }

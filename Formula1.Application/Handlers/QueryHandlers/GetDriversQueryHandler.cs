@@ -6,22 +6,22 @@ using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Formula1.Application.Handlers.QueryHandlers
+namespace Formula1.Application.Handlers.QueryHandlers;
+
+public class GetDriversQueryHandler(
+    IApplicationDbContext dbContext,
+    IScopedLogService logService,
+    IScopedErrorService errorService)
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetDriversQuery, List<DriverBasicDto>>
 {
-    public class GetDriversQueryHandler(
-        IApplicationDbContext context,
-        IScopedLogService logService)
-        : HandlerBase(context, logService), IRequestHandler<GetDriversQuery, List<DriverBasicDto>>
+    public async Task<List<DriverBasicDto>> Handle(GetDriversQuery request, CancellationToken cancellationToken)
     {
-        public async Task<List<DriverBasicDto>> Handle(GetDriversQuery request, CancellationToken cancellationToken)
-        {
-            _logService.Log();
-            var drivers = await _context.FORMULA1_Drivers
-                .AsNoTracking()
-                .OrderBy(e => e.Name)
-                .ToListAsync(cancellationToken);
-            _logService.Log(drivers.Count.ToString(), nameof(drivers.Count));
-            return drivers.Adapt<List<DriverBasicDto>>();
-        }
+        Log();
+        var drivers = await _dbContext.FORMULA1_Drivers
+            .AsNoTracking()
+            .OrderBy(e => e.Name)
+            .ToListAsync(cancellationToken);
+        Log(drivers.Count.ToString(), nameof(drivers.Count));
+        return drivers.Adapt<List<DriverBasicDto>>();
     }
 }

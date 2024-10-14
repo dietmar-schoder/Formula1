@@ -1,5 +1,4 @@
 ﻿using Formula1.Application.Interfaces.Services;
-using Formula1.Domain.Exceptions;
 using Microsoft.IdentityModel.Tokens;
 using System.Runtime.CompilerServices;
 
@@ -29,15 +28,13 @@ public class ScopedLogService : IScopedLogService
     public List<string> GetLogsAsList()
         => [.. _logs, .. _texts];
 
+    public string ExceptionAsTextBlock(Exception exception)
+    {
+        AddText(exception.Source);
+        AddText(exception.StackTrace);
+        return GetLogsAsString(exception.Message);
+    }
+
     public string GetLogsAsString(string title)
         => string.Join("\r\n", [title, string.Empty, .. _logs, string.Empty, .. _texts]);
-
-    public void ThrowError(int statusCode, string message)
-        => throw new UserError(statusCode, message);
-
-    public T ThrowNotFoundError<T>(string key) where T : class
-        => throw new UserError(404, $"Resource {typeof(T).Name} not found for '{key}'.");
-
-    public void ThrowException()
-        => throw new Exception();
 }

@@ -13,13 +13,9 @@ public interface IScopedLogService
 
     List<string> GetLogsAsList();
 
+    string ExceptionAsTextBlock(Exception exception);
+
     string GetLogsAsString(string title);
 
     void AddText(string text);
-
-    void ThrowError(int statusCode, string message);
-
-    T ThrowNotFoundError<T>(string key) where T : class;
-
-    void ThrowException();
 }

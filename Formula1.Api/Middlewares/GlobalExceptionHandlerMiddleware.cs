@@ -1,69 +1,26 @@
 ﻿using Formula1.Application.Interfaces.Services;
-using Formula1.Contracts.ExternalServices;
-using Formula1.Contracts.Responses;
-using Formula1.Domain.Exceptions;
-using System.Diagnostics;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Formula1.Api.Middlewares;
 
 public class GlobalExceptionHandlerMiddleware(
     RequestDelegate next,
-    IHostEnvironment env)
+    IHostEnvironment hostEnvironment)
 {
     private readonly RequestDelegate _next = next;
-    private readonly IHostEnvironment _env = env;
+    private readonly IHostEnvironment _hostEnvironment = hostEnvironment;
+    //private readonly  = scopedErrorService;
 
-    public async Task InvokeAsync(
-        HttpContext context,
-        IScopedLogService logService,
-        ISlackClient slackClient)
+    public async Task InvokeAsync(HttpContext context, IScopedErrorService scopedErrorService)
     {
         try
         {
             await _next(context);
         }
-        catch (UserError ex)
+        catch (Exception exception)
         {
-            await WriteErrorResponseAsync(context, ex.StatusCode, new ErrorResponse(ex.Message));
-        }
-        catch (Exception ex)
-        {
-            logService.AddText(ex.Source);
-            logService.AddText(ex.StackTrace);
-            var errorTextBlock = logService.GetLogsAsString(ex.Message);
-            if (_env.IsDevelopment())
-            {
-                WriteToConsole(errorTextBlock);
-                var responseBody = new ErrorResponse(ex.Message, logService.GetLogsAsList());
-                await WriteErrorResponseAsync(context, StatusCodes.Status500InternalServerError, responseBody);
-            }
-            else
-            {
-                slackClient.SendMessage($":boom: EXCEPTION: {errorTextBlock}");
-                await WriteErrorResponseAsync(context, StatusCodes.Status500InternalServerError, new ErrorResponse());
-            }
-        }
-
-        static async Task WriteErrorResponseAsync(HttpContext context, int statusCode, ErrorResponse responseBody)
-        {
-            context.Response.StatusCode = statusCode;
-            context.Response.ContentType = "application/json";
-            var options = new JsonSerializerOptions()
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            };
-            await context.Response.WriteAsync(JsonSerializer.Serialize(responseBody, options));
-        }
-
-        static void WriteToConsole(string message)
-        {
-            Debug.WriteLine(string.Empty);
-            Debug.WriteLine("== ERROR ==");
-            Debug.WriteLine(message);
-            Debug.WriteLine("===========");
-            Debug.WriteLine(string.Empty);
+            await (_hostEnvironment.IsDevelopment()
+                ? scopedErrorService.HandleExceptionInDevelopmentAsync(exception)
+                : scopedErrorService.HandleExceptionInProductionAsync(exception));
         }
     }
 }

@@ -15,5 +15,7 @@ public class Race
     public Guid GrandPrixId { get; set; }
     public GrandPrix GrandPRix { get; set; }
 
+    public ICollection<Session> Sessions { get; set; }
+
     public static Race Create() => new() { Id = Guid.NewGuid() };
 }

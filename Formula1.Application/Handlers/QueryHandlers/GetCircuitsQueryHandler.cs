@@ -9,18 +9,19 @@ using Microsoft.EntityFrameworkCore;
 namespace Formula1.Application.Handlers.QueryHandlers;
 
 public class GetCircuitsQueryHandler(
-    IApplicationDbContext context,
-    IScopedLogService logService)
-    : HandlerBase(context, logService), IRequestHandler<GetCircuitsQuery, List<CircuitBasicDto>>
+    IApplicationDbContext dbContext,
+    IScopedLogService logService,
+    IScopedErrorService errorService)
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetCircuitsQuery, List<CircuitBasicDto>>
 {
     public async Task<List<CircuitBasicDto>> Handle(GetCircuitsQuery request, CancellationToken cancellationToken)
     {
-        _logService.Log();
-        var circuits = await _context.FORMULA1_Circuits
+        Log();
+        var circuits = await _dbContext.FORMULA1_Circuits
             .AsNoTracking()
             .OrderBy(e => e.Name)
             .ToListAsync(cancellationToken);
-        _logService.Log(circuits.Count.ToString(), nameof(circuits.Count));
+        Log(circuits.Count.ToString(), nameof(circuits.Count));
         return circuits.Adapt<List<CircuitBasicDto>>();
     }
 }
