@@ -20,10 +20,13 @@ public class GetConstructorByIdQueryHandler(
         Log(request.Id.ToString(), nameof(request.Id));
         var constructor = await _dbContext.FORMULA1_Constructors
             .AsNoTracking()
-            .Include(e => e.Results.OrderByDescending(r => r.Session.StartDateTimeUtc))
-            .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? await ReturnNotFoundErrorAsync<Constructor>(request.Id.ToString());
+            .Include(e => e.Results).ThenInclude(r => r.Session)
+            .FirstOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
+            ?? AddNotFoundError<Constructor>(request.Id.ToString());
+        if (constructor is null) { return default; }
         Log(constructor.Id.ToString(), nameof(constructor.Id));
+        Log(constructor.Results.Count.ToString(), nameof(constructor.Results.Count));
+        constructor.Results = [.. constructor.Results.OrderByDescending(r => r.Session.StartDateTimeUtc)];
         return constructor.Adapt<ConstructorDto>();
     }
 }

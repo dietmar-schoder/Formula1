@@ -20,12 +20,15 @@ public class GetRaceByIdQueryHandler(
         Log(request.Id.ToString(), nameof(request.Id));
         var race = await _dbContext.FORMULA1_Races
             .AsNoTracking()
-            .Include(e => e.Season)
-            .Include(e => e.Circuit)
-            .Include(e => e.Sessions.OrderBy(s => s.SessionTypeId))
-            .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? await ReturnNotFoundErrorAsync<Race>(request.Id.ToString());
+            .Include(r => r.Season)
+            .Include(r => r.Circuit)
+            .Include(r => r.Sessions)
+            .FirstOrDefaultAsync(r => r.Id == request.Id, cancellationToken)
+            ?? AddNotFoundError<Race>(request.Id.ToString());
+        if (race is null) { return default; }
         Log(race.Id.ToString(), nameof(race.Id));
+        Log(race.Sessions.Count.ToString(), nameof(race.Sessions.Count));
+        race.Sessions = [.. race.Sessions.OrderBy(r => r.SessionTypeId)];
         return race.Adapt<RaceDto>();
     }
 }

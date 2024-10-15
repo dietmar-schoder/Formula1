@@ -39,6 +39,16 @@ GET {{Formula1.Api_HostAddress}}/api/drivers
 GET {{Formula1.Api_HostAddress}}/api/drivers/761f2a01-7007-49d1-84d6-3c5459a2fa89
 Accept: application/json
 
+### GrandPrix List
+
+GET {{Formula1.Api_HostAddress}}/api/grandprix
+Accept: application/json
+
+### GrandPrix
+
+GET {{Formula1.Api_HostAddress}}/api/grandprix/dd9e4a1b-4b6d-45bb-bcc4-e2014a977db7
+Accept: application/json
+
 ### Races
 
 GET {{Formula1.Api_HostAddress}}/api/races

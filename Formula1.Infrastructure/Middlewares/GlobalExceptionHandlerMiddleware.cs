@@ -1,6 +1,8 @@
 ﻿using Formula1.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 
-namespace Formula1.Api.Middlewares;
+namespace Formula1.Infrastructure.Middlewares;
 
 public class GlobalExceptionHandlerMiddleware(
     RequestDelegate next,
@@ -8,7 +10,6 @@ public class GlobalExceptionHandlerMiddleware(
 {
     private readonly RequestDelegate _next = next;
     private readonly IHostEnvironment _hostEnvironment = hostEnvironment;
-    //private readonly  = scopedErrorService;
 
     public async Task InvokeAsync(HttpContext context, IScopedErrorService scopedErrorService)
     {

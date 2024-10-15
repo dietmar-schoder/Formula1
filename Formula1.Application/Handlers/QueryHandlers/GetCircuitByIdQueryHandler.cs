@@ -20,10 +20,13 @@ public class GetCircuitByIdQueryHandler(
         Log(request.Id.ToString(), nameof(request.Id));
         var circuit = await _dbContext.FORMULA1_Circuits
             .AsNoTracking()
-            .Include(e => e.Races.OrderBy(r => r.SeasonYear))
-            .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? await ReturnNotFoundErrorAsync<Circuit>(request.Id.ToString());
+            .Include(c => c.Races)
+            .FirstOrDefaultAsync(c => c.Id.Equals(request.Id), cancellationToken)
+            ?? AddNotFoundError<Circuit>(request.Id.ToString());
+        if (circuit is null) { return default; }
         Log(circuit.Id.ToString(), nameof(circuit.Id));
+        Log(circuit.Races.Count.ToString(), nameof(circuit.Races.Count));
+        circuit.Races = [.. circuit.Races.OrderBy(r => r.SeasonYear)];
         return circuit.Adapt<CircuitDto>();
     }
 }

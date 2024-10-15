@@ -1,4 +1,6 @@
-﻿using Formula1.Application.Queries;
+﻿using Formula1.Api.Extensions;
+using Formula1.Application.Interfaces.Services;
+using Formula1.Application.Queries;
 using MediatR;
 
 namespace Formula1.Api.Endpoints;
@@ -13,7 +15,7 @@ public static class ConstructorsEndpoints
         static async Task<IResult> ListConstructorsAsync(IMediator mediator)
             => Results.Ok(await mediator.Send(new GetConstructorsQuery()));
 
-        static async Task<IResult> GetConstructorAsync(Guid id, IMediator mediator)
-            => Results.Ok(await mediator.Send(new GetConstructorByIdQuery(id)));
+        static async Task<IResult> GetConstructorAsync(Guid id, IMediator mediator, IScopedErrorService errorService)
+            => await mediator.SendQueryAsync(new GetConstructorByIdQuery(id), errorService);
     }
 }

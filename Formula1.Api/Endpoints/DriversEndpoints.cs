@@ -1,4 +1,6 @@
-﻿using Formula1.Application.Queries;
+﻿using Formula1.Api.Extensions;
+using Formula1.Application.Interfaces.Services;
+using Formula1.Application.Queries;
 using MediatR;
 
 namespace Formula1.Api.Endpoints;
@@ -13,7 +15,7 @@ public static class DriversEndpoints
         static async Task<IResult> ListDriversAsync(IMediator mediator)
             => Results.Ok(await mediator.Send(new GetDriversQuery()));
 
-        static async Task<IResult> GetDriverAsync(Guid id, IMediator mediator)
-            => Results.Ok(await mediator.Send(new GetDriverByIdQuery(id)));
+        static async Task<IResult> GetDriverAsync(Guid id, IMediator mediator, IScopedErrorService errorService)
+            => await mediator.SendQueryAsync(new GetDriverByIdQuery(id), errorService);
     }
 }
