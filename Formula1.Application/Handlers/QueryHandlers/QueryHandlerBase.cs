@@ -27,12 +27,6 @@ public abstract class HandlerBase(
     protected void AddErrorIf(bool condition, string message)
         => _errorService.AddErrorIf(condition, message);
 
-    public async Task ReturnErrorsIfAny()
-        => await _errorService.ReturnErrorsIfAny();
-
-    public async Task ReturnError(string message, int statusCode = 400)
-        => await _errorService.ReturnError(message, statusCode);
-
-    protected async Task<T> ReturnNotFoundErrorAsync<T>(string key) where T : class
-        => await _errorService.ReturnNotFoundErrorAsync<T>(key);
+    protected T AddNotFoundError<T>(string key) where T : class
+        => _errorService.AddNotFoundError<T>(key);
 }

@@ -20,15 +20,16 @@ public class GetSessionByIdQueryHandler(
         Log(request.Id.ToString(), nameof(request.Id));
         var session = await _dbContext.FORMULA1_Sessions
             .AsNoTracking()
-            .Include(e => e.Results)
-            .Include(e => e.SessionType)
-            .Include(s => s.Race)
-            .ThenInclude(r => r.Season)
-            .Include(e => e.Race)
-            .ThenInclude(e => e.Circuit)
-            .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? await ReturnNotFoundErrorAsync<Session>(request.Id.ToString());
+            .Include(s => s.Results)
+            .Include(s => s.SessionType)
+            .Include(s => s.Race).ThenInclude(r => r.Season)
+            .Include(s => s.Race).ThenInclude(r => r.Circuit)
+            .FirstOrDefaultAsync(s => s.Id.Equals(request.Id), cancellationToken)
+            ?? AddNotFoundError<Session>(request.Id.ToString());
+        if (session is null) { return default; }
         Log(session.Id.ToString(), nameof(session.Id));
+        Log(session.Results.Count.ToString(), nameof(session.Results.Count));
+        session.Results = [.. session.Results.OrderBy(r => r.Position)];
         return session.Adapt<SessionDto>();
     }
 }

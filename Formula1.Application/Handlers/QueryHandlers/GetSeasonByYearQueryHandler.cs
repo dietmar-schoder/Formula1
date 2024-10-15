@@ -20,11 +20,13 @@ public class GetSeasonByYearQueryHandler(
         Log(request.Year.ToString(), nameof(request.Year));
         var season = await _dbContext.FORMULA1_Seasons
             .AsNoTracking()
-            .Include(s => s.Races.OrderBy(r => r.Round))
-                .ThenInclude(r => r.Circuit)
-            .SingleOrDefaultAsync(s => s.Year == request.Year, cancellationToken)
-            ?? await ReturnNotFoundErrorAsync<Season>(request.Year.ToString());
+            .Include(s => s.Races).ThenInclude(r => r.Circuit)
+            .FirstOrDefaultAsync(s => s.Year == request.Year, cancellationToken)
+            ?? AddNotFoundError<Season>(request.Year.ToString());
+        if (season is null) { return default; }
         Log(season.Year.ToString(), nameof(season.Year));
+        Log(season.Races.Count.ToString(), nameof(season.Races.Count));
+        season.Races = [.. season.Races.OrderBy(r => r.Round)];
         return season.Adapt<SeasonDto>();
     }
 }

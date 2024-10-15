@@ -6,6 +6,8 @@ public class Result
 
     public int Position { get; set; }
 
+    public int Points { get; set; }
+
     public TimeSpan Time { get; set; }
 
     public Guid SessionId { get; set; }

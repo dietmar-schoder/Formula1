@@ -20,10 +20,13 @@ public class GetDriverByIdQueryHandler(
         Log(request.Id.ToString(), nameof(request.Id));
         var driver = await _dbContext.FORMULA1_Drivers
             .AsNoTracking()
-            .Include(e => e.Results.OrderByDescending(r => r.Session.StartDateTimeUtc))
-            .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? await ReturnNotFoundErrorAsync<Driver>(request.Id.ToString());
+            .Include(d => d.Results).ThenInclude(r => r.Session)
+            .FirstOrDefaultAsync(d => d.Id.Equals(request.Id), cancellationToken)
+            ?? AddNotFoundError<Driver>(request.Id.ToString());
+        if (driver is null) { return default; }
         Log(driver.Id.ToString(), nameof(driver.Id));
+        Log(driver.Results.Count.ToString(), nameof(driver.Results.Count));
+        driver.Results = [.. driver.Results.OrderByDescending(r => r.Session.StartDateTimeUtc)];
         return driver.Adapt<DriverDto>();
     }
 }

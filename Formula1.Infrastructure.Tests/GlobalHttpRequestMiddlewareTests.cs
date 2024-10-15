@@ -1,9 +1,9 @@
 using Moq;
 using Microsoft.AspNetCore.Http;
 using Formula1.Application.Interfaces.Services;
-using Formula1.Api.Middlewares;
+using Formula1.Infrastructure.Middlewares;
 
-namespace Formula1.Api.Tests;
+namespace Formula1.Infrastructure.Tests;
 
 [TestFixture]
 public class GlobalHttpRequestMiddlewareTests

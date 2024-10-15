@@ -1,4 +1,6 @@
-﻿using Formula1.Application.Queries;
+﻿using Formula1.Api.Extensions;
+using Formula1.Application.Interfaces.Services;
+using Formula1.Application.Queries;
 using MediatR;
 
 namespace Formula1.Api.Endpoints;
@@ -13,10 +15,7 @@ public static class SeasonsEndpoints
         static async Task<IResult> ListSeasonsAsync(IMediator mediator)
             => Results.Ok(await mediator.Send(new GetSeasonsQuery()));
 
-        static async Task<IResult> GetSeasonAsync(int year, IMediator mediator)
-        {
-            Console.WriteLine("START");
-            return Results.Ok(await mediator.Send(new GetSeasonByYearQuery(year)));
-        }
+        static async Task<IResult> GetSeasonAsync(int year, IMediator mediator, IScopedErrorService errorService)
+            => await mediator.SendQueryAsync(new GetSeasonByYearQuery(year), errorService);
     }
 }

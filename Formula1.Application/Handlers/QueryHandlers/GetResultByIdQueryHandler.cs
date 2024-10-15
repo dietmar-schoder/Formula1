@@ -20,11 +20,12 @@ public class GetResultByIdQueryHandler(
         Log(request.Id.ToString(), nameof(request.Id));
         var result = await _dbContext.FORMULA1_Results
             .AsNoTracking()
-            .Include(e => e.Session)
-            .Include(e => e.Driver)
-            .Include(e => e.Constructor)
-            .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken)
-            ?? await ReturnNotFoundErrorAsync<Result>(request.Id.ToString());
+            .Include(r => r.Session)
+            .Include(r => r.Driver)
+            .Include(r => r.Constructor)
+            .FirstOrDefaultAsync(r => r.Id.Equals(request.Id), cancellationToken)
+            ?? AddNotFoundError<Result>(request.Id.ToString());
+        if (result is null) { return default; }
         Log(result.Id.ToString(), nameof(result.Id));
         return result.Adapt<ResultDto>();
     }

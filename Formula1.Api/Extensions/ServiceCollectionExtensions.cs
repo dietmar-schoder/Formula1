@@ -1,5 +1,4 @@
-﻿using Formula1.Api.Middlewares;
-using Formula1.Application.Interfaces.Services;
+﻿using Formula1.Application.Interfaces.Services;
 using Formula1.Contracts.ExternalServices;
 using Formula1.Domain.Common.Interfaces;
 using Formula1.Infrastructure.ExternalApis;

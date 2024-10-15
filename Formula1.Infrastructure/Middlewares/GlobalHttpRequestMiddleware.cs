@@ -1,6 +1,7 @@
 ﻿using Formula1.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 
-namespace Formula1.Api.Middlewares;
+namespace Formula1.Infrastructure.Middlewares;
 
 public class GlobalHttpRequestMiddleware(RequestDelegate next)
 {
