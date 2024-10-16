@@ -13,6 +13,7 @@ public static class InfrastructureServiceRegistrations
         var isDevelopment = environment.IsDevelopment();
 
         services.AddHttpContextAccessor();
+
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddScoped<IScopedErrorService, ScopedErrorService>();
         services.AddScoped<IScopedLogService, ScopedLogService>();
