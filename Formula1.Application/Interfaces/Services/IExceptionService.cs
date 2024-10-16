@@ -2,7 +2,5 @@
 
 public interface IExceptionService
 {
-    Task HandleExceptionInDevelopmentAsync(Exception exception);
-
-    Task HandleExceptionInProductionAsync(Exception exception);
+    Task HandleExceptionAsync(Exception exception);
 }

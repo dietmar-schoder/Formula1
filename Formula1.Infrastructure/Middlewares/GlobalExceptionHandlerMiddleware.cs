@@ -1,15 +1,11 @@
 ﻿using Formula1.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
 
 namespace Formula1.Infrastructure.Middlewares;
 
-public class GlobalExceptionHandlerMiddleware(
-    RequestDelegate next,
-    IHostEnvironment hostEnvironment)
+public class GlobalExceptionHandlerMiddleware(RequestDelegate next)
 {
     private readonly RequestDelegate _next = next;
-    private readonly IHostEnvironment _hostEnvironment = hostEnvironment;
 
     public async Task InvokeAsync(HttpContext context, IExceptionService exceptionService)
     {
@@ -19,9 +15,7 @@ public class GlobalExceptionHandlerMiddleware(
         }
         catch (Exception exception)
         {
-            await (_hostEnvironment.IsDevelopment()
-                ? exceptionService.HandleExceptionInDevelopmentAsync(exception)
-                : exceptionService.HandleExceptionInProductionAsync(exception));
+            await exceptionService.HandleExceptionAsync(exception);
         }
     }
 }

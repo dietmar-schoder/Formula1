@@ -8,13 +8,17 @@ namespace Formula1.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructureServices(
+        this IServiceCollection services,
+        IWebHostEnvironment environment)
     {
+        var isDevelopment = environment.IsDevelopment();
         services.AddHttpContextAccessor();
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-        services.AddScoped<IExceptionService, ExceptionService>();
         services.AddScoped<IScopedErrorService, ScopedErrorService>();
         services.AddScoped<IScopedLogService, ScopedLogService>();
+        services.AddScoped(typeof(IExceptionService),
+            isDevelopment ? typeof(ExceptionInDevelopmentService) : typeof(ExceptionInProductionService));
         services.AddHttpClient<ISlackClient, SlackClient>(client =>
         {
             client.BaseAddress = new Uri("https://hooks.slack.com");
