@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddHttpContextAccessor();
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddScoped<IExceptionService, ExceptionService>();
         services.AddScoped<IScopedErrorService, ScopedErrorService>();
         services.AddScoped<IScopedLogService, ScopedLogService>();
         services.AddHttpClient<ISlackClient, SlackClient>(client =>

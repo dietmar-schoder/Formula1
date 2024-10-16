@@ -11,7 +11,7 @@ public class GlobalExceptionHandlerMiddleware(
     private readonly RequestDelegate _next = next;
     private readonly IHostEnvironment _hostEnvironment = hostEnvironment;
 
-    public async Task InvokeAsync(HttpContext context, IScopedErrorService scopedErrorService)
+    public async Task InvokeAsync(HttpContext context, IExceptionService exceptionService)
     {
         try
         {
@@ -20,8 +20,8 @@ public class GlobalExceptionHandlerMiddleware(
         catch (Exception exception)
         {
             await (_hostEnvironment.IsDevelopment()
-                ? scopedErrorService.HandleExceptionInDevelopmentAsync(exception)
-                : scopedErrorService.HandleExceptionInProductionAsync(exception));
+                ? exceptionService.HandleExceptionInDevelopmentAsync(exception)
+                : exceptionService.HandleExceptionInProductionAsync(exception));
         }
     }
 }

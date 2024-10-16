@@ -9,8 +9,4 @@ public interface IScopedErrorService
     void AddErrorIf(bool condition, string message);
 
     T AddNotFoundError<T>(string key) where T : class;
-
-    Task HandleExceptionInDevelopmentAsync(Exception exception);
-
-    Task HandleExceptionInProductionAsync(Exception exception);
 }
