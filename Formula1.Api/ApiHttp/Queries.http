@@ -1,15 +1,5 @@
 @Formula1.Api_HostAddress = https://localhost:7277
 
-### Alive
-
-GET {{Formula1.Api_HostAddress}}/api
-Accept: application/json
-
-### Error
-
-GET {{Formula1.Api_HostAddress}}/error
-Accept: application/json
-
 ### Circuits
 
 GET {{Formula1.Api_HostAddress}}/api/circuits

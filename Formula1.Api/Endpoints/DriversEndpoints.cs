@@ -1,5 +1,4 @@
-﻿using Formula1.Api.Extensions;
-using Formula1.Application.Interfaces.Services;
+﻿using Formula1.Application.Interfaces.Services;
 using Formula1.Application.Queries;
 using MediatR;
 

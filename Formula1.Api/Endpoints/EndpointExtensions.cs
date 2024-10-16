@@ -1,9 +1,9 @@
 ﻿using Formula1.Application.Interfaces.Services;
 using MediatR;
 
-namespace Formula1.Api.Extensions
+namespace Formula1.Api.Endpoints
 {
-    public static class EndpointExtenstions
+    public static class EndpointExtensions
     {
         public static async Task<IResult> SendQueryAsync<TResponse>(
             this IMediator mediator,

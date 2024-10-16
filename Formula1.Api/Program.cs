@@ -1,5 +1,5 @@
 using Formula1.Api.Endpoints;
-using Formula1.Api.Extensions;
+using Formula1.Api.ServiceRegistrations;
 using Formula1.Application.Handlers.QueryHandlers;
 using Formula1.Application.Interfaces.Persistence;
 using Formula1.Infrastructure.Middlewares;
@@ -29,6 +29,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetVersionQueryHandler).Assembly));
+builder.Services.AddExternalServices();
 builder.Services.AddInfrastructureServices(builder.Environment);
 
 #endregion
