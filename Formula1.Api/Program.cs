@@ -24,6 +24,16 @@ builder.Services.Configure<JsonOptions>(options =>
 {
     options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -38,6 +48,7 @@ builder.Services.AddInfrastructureServices(builder.Environment);
 
 var app = builder.Build();
 
+app.UseCors("AllowAllOrigins");
 app.UseMiddleware<GlobalHttpRequestMiddleware>();
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
