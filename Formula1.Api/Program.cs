@@ -60,7 +60,8 @@ app.MapScalarApiReference(options =>
 {
     options
         .WithTitle("Formula 1 API Reference")
-        .WithSidebar(false)
+        .WithDarkMode(false)
+        .WithSidebar(true)
         .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
 });
 
