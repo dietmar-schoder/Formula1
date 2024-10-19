@@ -19,7 +19,7 @@ public class GetSeasonsQueryHandler(
         Log();
         var seasons = await _dbContext.FORMULA1_Seasons
             .AsNoTracking()
-            .OrderBy(e => e.Year)
+            .OrderByDescending(e => e.Year)
             .ToListAsync(cancellationToken);
         Log(seasons.Count.ToString(), nameof(seasons.Count));
         return seasons.Adapt<List<SeasonDto>>();
