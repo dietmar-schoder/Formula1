@@ -1,5 +1,5 @@
-﻿using Formula1.Application.Interfaces.Services;
-using Formula1.Application.Queries;
+﻿using Formula1.Application.Handlers.QueryHandlers;
+using Formula1.Application.Interfaces.Services;
 using MediatR;
 
 namespace Formula1.Api.Endpoints;
@@ -13,7 +13,7 @@ public static class AliveEndpoints
         app.MapGet("/error", ThrowError);
 
         static async Task<IResult> GetVersionAsync(IMediator mediator)
-            => Results.Ok(await mediator.Send(new GetVersionQuery()));
+            => Results.Ok(await mediator.Send(new GetVersion.Query()));
 
         static IResult ThrowError(IScopedLogService logService)
         {

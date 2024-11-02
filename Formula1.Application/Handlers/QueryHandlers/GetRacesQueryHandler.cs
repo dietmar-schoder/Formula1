@@ -19,9 +19,11 @@ public class GetRacesQueryHandler(
         Log();
         var races = await _dbContext.FORMULA1_Races
             .AsNoTracking()
-            .Include(e => e.Season)
-            .Include(e => e.Circuit)
+            .Include(r => r.Season)
+            .Include(r => r.GrandPrix)
+            .Include(r => r.Circuit)
             .OrderByDescending(e => e.SeasonYear)
+                .ThenBy(r => r.Round)
             .ToListAsync(cancellationToken);
         Log(races.Count.ToString(), nameof(races.Count));
         return races.Adapt<List<RaceBasicDto>>();

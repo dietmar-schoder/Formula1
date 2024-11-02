@@ -1,5 +1,4 @@
 ﻿using Formula1.Application.Interfaces.Services;
-using Microsoft.IdentityModel.Tokens;
 using System.Runtime.CompilerServices;
 
 namespace Formula1.Infrastructure.Services;
@@ -11,12 +10,12 @@ public class ScopedLogService : IScopedLogService
 
     public void Log(
         string content = "",
-        string var = "",
+        string var = default,
         [CallerMemberName] string callerMethod = "",
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int callerLine = 0)
     {
-        var = var.IsNullOrEmpty() ? string.Empty : $"{var}: ";
+        var = string.IsNullOrEmpty(var) ? string.Empty : $"{var}: ";
         string className = Path.GetFileNameWithoutExtension(callerFile);
         string logEntry = $"{className}.{callerMethod}() - Line {callerLine} [{var}'{content}']";
         _logs.Add($"{_logs.Count + 1}. {logEntry}");

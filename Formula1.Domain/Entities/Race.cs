@@ -13,7 +13,7 @@ public class Race
     public Circuit Circuit { get; set; }
 
     public Guid GrandPrixId { get; set; }
-    public GrandPrix GrandPRix { get; set; }
+    public GrandPrix GrandPrix { get; set; }
 
     public ICollection<Session> Sessions { get; set; }
 

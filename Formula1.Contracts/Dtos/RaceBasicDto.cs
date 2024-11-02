@@ -10,5 +10,7 @@ public class RaceBasicDto
 
     public SeasonBasicDto Season { get; set; }
 
+    public GrandPrixBasicDto GrandPrix { get; set; }
+
     public CircuitBasicDto Circuit { get; set; }
 }
