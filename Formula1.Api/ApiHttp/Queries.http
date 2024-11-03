@@ -41,7 +41,7 @@ Accept: application/json
 
 ### Races
 
-GET {{Formula1.Api_HostAddress}}/api/races
+GET {{Formula1.Api_HostAddress}}/api/races?pagenumber=3&pagesize=4
 Accept: application/json
 
 ### Race

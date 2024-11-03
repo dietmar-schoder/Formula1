@@ -1,4 +1,5 @@
-﻿using Formula1.Application.Interfaces.Services;
+﻿using Formula1.Application.Handlers.QueryHandlers;
+using Formula1.Application.Interfaces.Services;
 using Formula1.Application.Queries;
 using MediatR;
 
@@ -11,8 +12,10 @@ public static class RacesEndpoints
         app.MapGet("/api/races", ListRacesAsync);
         app.MapGet("/api/races/{id:guid}", GetRaceAsync);
 
-        static async Task<IResult> ListRacesAsync(IMediator mediator)
-            => Results.Ok(await mediator.Send(new GetRacesQuery()));
+        static async Task<IResult> ListRacesAsync(IMediator mediator,
+            int pageNumber = 1,
+            int PageSize = 20)
+            => Results.Ok(await mediator.Send(new GetRaces.Query(pageNumber, PageSize)));
 
         static async Task<IResult> GetRaceAsync(Guid id, IMediator mediator, IScopedErrorService errorService)
             => await mediator.SendQueryAsync(new GetRaceByIdQuery(id), errorService);
