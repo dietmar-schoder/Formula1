@@ -11,11 +11,11 @@ public class GetGrandPrix(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetGrandPrix.Query, GrandPrixPaginatedDto<GrandPrixDto>>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetGrandPrix.Query, GrandPrixPaginatedDto>
 {
-    public record Query(int PageNumber, int PageSize) : IRequest<GrandPrixPaginatedDto<GrandPrixDto>> { }
+    public record Query(int PageNumber, int PageSize) : IRequest<GrandPrixPaginatedDto> { }
 
-    public async Task<GrandPrixPaginatedDto<GrandPrixDto>> Handle(Query query, CancellationToken cancellationToken)
+    public async Task<GrandPrixPaginatedDto> Handle(Query query, CancellationToken cancellationToken)
     {
         Log();
         var totalCount = await _dbContext.FORMULA1_GrandPrix.CountAsync(cancellationToken);
@@ -26,7 +26,7 @@ public class GetGrandPrix(
             .Take(query.PageSize)
             .ToListAsync(cancellationToken);
         Log(grandPrix.Count.ToString(), nameof(grandPrix.Count));
-        return new GrandPrixPaginatedDto<GrandPrixDto>(
+        return new GrandPrixPaginatedDto(
             grandPrix.Adapt<List<GrandPrixDto>>(),
             query.PageNumber,
             query.PageSize,

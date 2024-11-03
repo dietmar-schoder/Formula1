@@ -11,11 +11,11 @@ public class GetDrivers(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetDrivers.Query, DriversPaginatedDto<DriverDto>>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetDrivers.Query, DriversPaginatedDto>
 {
-    public record Query(int PageNumber, int PageSize) : IRequest<DriversPaginatedDto<DriverDto>> { }
+    public record Query(int PageNumber, int PageSize) : IRequest<DriversPaginatedDto> { }
 
-    public async Task<DriversPaginatedDto<DriverDto>> Handle(Query query, CancellationToken cancellationToken)
+    public async Task<DriversPaginatedDto> Handle(Query query, CancellationToken cancellationToken)
     {
         Log();
         var totalCount = await _dbContext.FORMULA1_Drivers.CountAsync(cancellationToken);
@@ -26,7 +26,7 @@ public class GetDrivers(
             .Take(query.PageSize)
             .ToListAsync(cancellationToken);
         Log(drivers.Count.ToString(), nameof(drivers.Count));
-        return new DriversPaginatedDto<DriverDto>(
+        return new DriversPaginatedDto(
             drivers.Adapt<List<DriverDto>>(),
             query.PageNumber,
             query.PageSize,

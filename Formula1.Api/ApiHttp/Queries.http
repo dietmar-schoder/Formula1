@@ -61,7 +61,7 @@ Accept: application/json
 
 ### Seasons
 
-GET {{Formula1.Api_HostAddress}}/api/seasons
+GET {{Formula1.Api_HostAddress}}/api/seasons?pagenumber=3&pagesize=4
 Accept: application/json
 
 ### Season
