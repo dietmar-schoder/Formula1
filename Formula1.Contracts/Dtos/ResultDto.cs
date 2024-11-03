@@ -10,7 +10,7 @@ public class ResultDto
 
     public SessionBasicDto Session { get; set; }
 
-    public DriverBasicDto Driver { get; set; }
+    public DriverDto Driver { get; set; }
 
     public ConstructorBasicDto Constructor { get; set; }
 }

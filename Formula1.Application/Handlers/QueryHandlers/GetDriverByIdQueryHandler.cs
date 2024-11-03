@@ -13,9 +13,9 @@ public class GetDriverByIdQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetDriverByIdQuery, DriverDto>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetDriverByIdQuery, DriverResultsDto>
 {
-    public async Task<DriverDto> Handle(GetDriverByIdQuery request, CancellationToken cancellationToken)
+    public async Task<DriverResultsDto> Handle(GetDriverByIdQuery request, CancellationToken cancellationToken)
     {
         Log(request.Id.ToString(), nameof(request.Id));
         var driver = await _dbContext.FORMULA1_Drivers
@@ -27,6 +27,6 @@ public class GetDriverByIdQueryHandler(
         Log(driver.Id.ToString(), nameof(driver.Id));
         Log(driver.Results.Count.ToString(), nameof(driver.Results.Count));
         driver.Results = [.. driver.Results.OrderByDescending(r => r.Session.StartDateTimeUtc)];
-        return driver.Adapt<DriverDto>();
+        return driver.Adapt<DriverResultsDto>();
     }
 }
