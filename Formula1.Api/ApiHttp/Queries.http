@@ -2,7 +2,7 @@
 
 ### Circuits
 
-GET {{Formula1.Api_HostAddress}}/api/circuits
+GET {{Formula1.Api_HostAddress}}/api/circuits?pagenumber=3&pagesize=4
 Accept: application/json
 
 ### Circuit
@@ -12,7 +12,7 @@ Accept: application/json
 
 ### Constructors
 
-GET {{Formula1.Api_HostAddress}}/api/constructors
+GET {{Formula1.Api_HostAddress}}/api/constructors?pagenumber=3&pagesize=4
 Accept: application/json
 
 ### Constructor
@@ -22,7 +22,7 @@ Accept: application/json
 
 ### Drivers
 
-GET {{Formula1.Api_HostAddress}}/api/drivers
+GET {{Formula1.Api_HostAddress}}/api/drivers?pagenumber=3&pagesize=4
 
 ### Driver
 
@@ -31,7 +31,7 @@ Accept: application/json
 
 ### GrandPrix List
 
-GET {{Formula1.Api_HostAddress}}/api/grandprix
+GET {{Formula1.Api_HostAddress}}/api/grandprix?pagenumber=3&pagesize=4
 Accept: application/json
 
 ### GrandPrix
@@ -41,7 +41,7 @@ Accept: application/json
 
 ### Races
 
-GET {{Formula1.Api_HostAddress}}/api/races
+GET {{Formula1.Api_HostAddress}}/api/races?pagenumber=3&pagesize=4
 Accept: application/json
 
 ### Race
@@ -51,7 +51,7 @@ Accept: application/json
 
 ### Results
 
-GET {{Formula1.Api_HostAddress}}/api/results
+GET {{Formula1.Api_HostAddress}}/api/results?pagenumber=3&pagesize=4
 Accept: application/json
 
 ### Result
@@ -61,7 +61,7 @@ Accept: application/json
 
 ### Seasons
 
-GET {{Formula1.Api_HostAddress}}/api/seasons
+GET {{Formula1.Api_HostAddress}}/api/seasons?pagenumber=3&pagesize=4
 Accept: application/json
 
 ### Season
@@ -71,7 +71,7 @@ Accept: application/json
 
 ### Sessions
 
-GET {{Formula1.Api_HostAddress}}/api/sessions
+GET {{Formula1.Api_HostAddress}}/api/sessions?pagenumber=1&pagesize=2
 Accept: application/json
 
 ### Session

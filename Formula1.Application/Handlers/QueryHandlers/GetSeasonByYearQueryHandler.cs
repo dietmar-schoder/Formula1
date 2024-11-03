@@ -13,9 +13,9 @@ public class GetSeasonByYearQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSeasonByYearQuery, SeasonDto>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSeasonByYearQuery, SeasonRacesDto>
 {
-    public async Task<SeasonDto> Handle(GetSeasonByYearQuery request, CancellationToken cancellationToken)
+    public async Task<SeasonRacesDto> Handle(GetSeasonByYearQuery request, CancellationToken cancellationToken)
     {
         Log(request.Year.ToString(), nameof(request.Year));
         var season = await _dbContext.FORMULA1_Seasons
@@ -27,6 +27,6 @@ public class GetSeasonByYearQueryHandler(
         Log(season.Year.ToString(), nameof(season.Year));
         Log(season.Races.Count.ToString(), nameof(season.Races.Count));
         season.Races = [.. season.Races.OrderBy(r => r.Round)];
-        return season.Adapt<SeasonDto>();
+        return season.Adapt<SeasonRacesDto>();
     }
 }

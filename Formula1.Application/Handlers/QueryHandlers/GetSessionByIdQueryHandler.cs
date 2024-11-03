@@ -13,9 +13,9 @@ public class GetSessionByIdQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSessionByIdQuery, SessionDto>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSessionByIdQuery, SessionResultsDto>
 {
-    public async Task<SessionDto> Handle(GetSessionByIdQuery request, CancellationToken cancellationToken)
+    public async Task<SessionResultsDto> Handle(GetSessionByIdQuery request, CancellationToken cancellationToken)
     {
         Log(request.Id.ToString(), nameof(request.Id));
         var session = await _dbContext.FORMULA1_Sessions
@@ -30,6 +30,6 @@ public class GetSessionByIdQueryHandler(
         Log(session.Id.ToString(), nameof(session.Id));
         Log(session.Results.Count.ToString(), nameof(session.Results.Count));
         session.Results = [.. session.Results.OrderBy(r => r.Position)];
-        return session.Adapt<SessionDto>();
+        return session.Adapt<SessionResultsDto>();
     }
 }
