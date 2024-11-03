@@ -1,6 +1,3 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public class ConstructorDto : ConstructorBasicDto
-{
-    public ICollection<ResultDto> Results { get; set; }
-}
+public record ConstructorDto(Guid Id, string Name);

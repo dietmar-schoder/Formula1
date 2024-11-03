@@ -12,5 +12,5 @@ public class ResultDto
 
     public DriverDto Driver { get; set; }
 
-    public ConstructorBasicDto Constructor { get; set; }
+    public ConstructorDto Constructor { get; set; }
 }
