@@ -13,9 +13,9 @@ public class GetRaceByIdQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetRaceByIdQuery, RaceDto>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetRaceByIdQuery, RaceSessionsDto>
 {
-    public async Task<RaceDto> Handle(GetRaceByIdQuery request, CancellationToken cancellationToken)
+    public async Task<RaceSessionsDto> Handle(GetRaceByIdQuery request, CancellationToken cancellationToken)
     {
         Log(request.Id.ToString(), nameof(request.Id));
         var race = await _dbContext.FORMULA1_Races
@@ -29,6 +29,6 @@ public class GetRaceByIdQueryHandler(
         Log(race.Id.ToString(), nameof(race.Id));
         Log(race.Sessions.Count.ToString(), nameof(race.Sessions.Count));
         race.Sessions = [.. race.Sessions.OrderBy(r => r.SessionTypeId)];
-        return race.Adapt<RaceDto>();
+        return race.Adapt<RaceSessionsDto>();
     }
 }

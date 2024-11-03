@@ -12,9 +12,9 @@ public class GetCircuitsQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetCircuitsQuery, List<CircuitBasicDto>>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetCircuitsQuery, List<CircuitDto>>
 {
-    public async Task<List<CircuitBasicDto>> Handle(GetCircuitsQuery request, CancellationToken cancellationToken)
+    public async Task<List<CircuitDto>> Handle(GetCircuitsQuery request, CancellationToken cancellationToken)
     {
         Log();
         var circuits = await _dbContext.FORMULA1_Circuits
@@ -22,6 +22,6 @@ public class GetCircuitsQueryHandler(
             .OrderBy(e => e.Name)
             .ToListAsync(cancellationToken);
         Log(circuits.Count.ToString(), nameof(circuits.Count));
-        return circuits.Adapt<List<CircuitBasicDto>>();
+        return circuits.Adapt<List<CircuitDto>>();
     }
 }

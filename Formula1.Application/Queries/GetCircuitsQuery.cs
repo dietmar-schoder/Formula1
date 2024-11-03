@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Formula1.Application.Queries;
 
-public class GetCircuitsQuery : IRequest<List<CircuitBasicDto>> { }
+public class GetCircuitsQuery : IRequest<List<CircuitDto>> { }

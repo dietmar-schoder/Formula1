@@ -12,9 +12,9 @@ public class GetGrandPrixQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetGrandPrixQuery, List<GrandPrixBasicDto>>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetGrandPrixQuery, List<GrandPrixDto>>
 {
-    public async Task<List<GrandPrixBasicDto>> Handle(GetGrandPrixQuery request, CancellationToken cancellationToken)
+    public async Task<List<GrandPrixDto>> Handle(GetGrandPrixQuery request, CancellationToken cancellationToken)
     {
         Log();
         var grandPrix = await _dbContext.FORMULA1_GrandPrix
@@ -22,6 +22,6 @@ public class GetGrandPrixQueryHandler(
             .OrderBy(e => e.Name)
             .ToListAsync(cancellationToken);
         Log(grandPrix.Count.ToString(), nameof(grandPrix.Count));
-        return grandPrix.Adapt<List<GrandPrixBasicDto>>();
+        return grandPrix.Adapt<List<GrandPrixDto>>();
     }
 }

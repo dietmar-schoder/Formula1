@@ -8,7 +8,7 @@ public class ResultDto
 
     public TimeSpan Time { get; set; }
 
-    public SessionBasicDto Session { get; set; }
+    public SessionDto Session { get; set; }
 
     public DriverDto Driver { get; set; }
 

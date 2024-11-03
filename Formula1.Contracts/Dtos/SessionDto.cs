@@ -1,6 +1,7 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public class SessionDto : SessionBasicDto
-{
-    public ICollection<ResultDto> Results { get; set; }
-}
+public record SessionDto(
+    Guid Id,
+    DateTime StartDateTimeUtc,
+    SessionTypeDto SessionType,
+    RaceDto Race);

@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Formula1.Application.Queries
 {
-    public class GetRacesQuery : IRequest<List<RaceBasicDto>> { }
+    public class GetRacesQuery : IRequest<List<RaceDto>> { }
 }

@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Formula1.Application.Queries;
 
-public class GetSeasonsQuery : IRequest<List<SeasonDto>> { }
+public class GetSeasonsQuery : IRequest<List<SeasonRacesDto>> { }

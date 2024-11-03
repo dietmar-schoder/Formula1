@@ -13,9 +13,9 @@ public class GetGrandPrixByIdQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetGrandPrixByIdQuery, GrandPrixDto>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetGrandPrixByIdQuery, GrandPrixRacesDto>
 {
-    public async Task<GrandPrixDto> Handle(GetGrandPrixByIdQuery request, CancellationToken cancellationToken)
+    public async Task<GrandPrixRacesDto> Handle(GetGrandPrixByIdQuery request, CancellationToken cancellationToken)
     {
         Log(request.Id.ToString(), nameof(request.Id));
         var grandPrix = await _dbContext.FORMULA1_GrandPrix
@@ -27,6 +27,6 @@ public class GetGrandPrixByIdQueryHandler(
         Log(grandPrix.Id.ToString(), nameof(grandPrix.Id));
         Log(grandPrix.Races.Count.ToString(), nameof(grandPrix.Races.Count));
         grandPrix.Races = [.. grandPrix.Races.OrderBy(r => r.SeasonYear)];
-        return grandPrix.Adapt<GrandPrixDto>();
+        return grandPrix.Adapt<GrandPrixRacesDto>();
     }
 }

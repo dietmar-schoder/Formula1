@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Formula1.Application.Queries;
 
-public class GetSessionsQuery : IRequest<List<SessionBasicDto>> { }
+public class GetSessionsQuery : IRequest<List<SessionDto>> { }

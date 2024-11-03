@@ -12,9 +12,9 @@ public class GetSessionsQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSessionsQuery, List<SessionBasicDto>>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSessionsQuery, List<SessionDto>>
 {
-    public async Task<List<SessionBasicDto>> Handle(GetSessionsQuery request, CancellationToken cancellationToken)
+    public async Task<List<SessionDto>> Handle(GetSessionsQuery request, CancellationToken cancellationToken)
     {
         Log();
         var sessions = await _dbContext.FORMULA1_Sessions
@@ -29,6 +29,6 @@ public class GetSessionsQueryHandler(
             .ThenBy(s => s.Race.Round)
             .ToListAsync(cancellationToken);
         Log(sessions.Count.ToString(), nameof(sessions.Count));
-        return sessions.Adapt<List<SessionBasicDto>>();
+        return sessions.Adapt<List<SessionDto>>();
     }
 }

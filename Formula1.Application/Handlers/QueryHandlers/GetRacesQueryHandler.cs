@@ -12,9 +12,9 @@ public class GetRacesQueryHandler(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetRacesQuery, List<RaceBasicDto>>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetRacesQuery, List<RaceDto>>
 {
-    public async Task<List<RaceBasicDto>> Handle(GetRacesQuery request, CancellationToken cancellationToken)
+    public async Task<List<RaceDto>> Handle(GetRacesQuery request, CancellationToken cancellationToken)
     {
         Log();
         var races = await _dbContext.FORMULA1_Races
@@ -26,6 +26,6 @@ public class GetRacesQueryHandler(
                 .ThenBy(r => r.Round)
             .ToListAsync(cancellationToken);
         Log(races.Count.ToString(), nameof(races.Count));
-        return races.Adapt<List<RaceBasicDto>>();
+        return races.Adapt<List<RaceDto>>();
     }
 }
