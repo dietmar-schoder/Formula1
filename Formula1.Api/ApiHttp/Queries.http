@@ -2,7 +2,7 @@
 
 ### Circuits
 
-GET {{Formula1.Api_HostAddress}}/api/circuits
+GET {{Formula1.Api_HostAddress}}/api/circuits?pagenumber=3&pagesize=4
 Accept: application/json
 
 ### Circuit
@@ -71,7 +71,7 @@ Accept: application/json
 
 ### Sessions
 
-GET {{Formula1.Api_HostAddress}}/api/sessions
+GET {{Formula1.Api_HostAddress}}/api/sessions?pagenumber=1&pagesize=2
 Accept: application/json
 
 ### Session
