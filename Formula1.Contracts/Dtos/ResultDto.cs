@@ -6,6 +6,8 @@ public class ResultDto
 
     public int Position { get; set; }
 
+    public int Points { get; set; }
+
     public TimeSpan Time { get; set; }
 
     public SessionDto Session { get; set; }
