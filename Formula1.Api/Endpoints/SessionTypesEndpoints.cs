@@ -9,7 +9,9 @@ public static class SessionTypesEndpoints
     {
         app.MapGet("/api/sessiontypes", ListSessionTypesAsync);
 
-        static async Task<IResult> ListSessionTypesAsync(IMediator mediator)
-            => Results.Ok(await mediator.Send(new GetSessionTypes.Query()));
+        static async Task<IResult> ListSessionTypesAsync(IMediator mediator,
+            int pageNumber = 1,
+            int PageSize = 20)
+            => Results.Ok(await mediator.Send(new GetSessionTypes.Query(pageNumber, PageSize)));
     }
 }

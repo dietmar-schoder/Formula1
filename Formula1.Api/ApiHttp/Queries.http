@@ -51,7 +51,7 @@ Accept: application/json
 
 ### Results
 
-GET {{Formula1.Api_HostAddress}}/api/results?pagenumber=3&pagesize=4
+GET {{Formula1.Api_HostAddress}}/api/results?pagenumber=1&pagesize=100
 Accept: application/json
 
 ### Result
@@ -81,7 +81,7 @@ Accept: application/json
 
 ### SessionTypes
 
-GET {{Formula1.Api_HostAddress}}/api/sessiontypes
+GET {{Formula1.Api_HostAddress}}/api/sessiontypes?pagenumber=1&pagesize=20
 Accept: application/json
 
 ###
