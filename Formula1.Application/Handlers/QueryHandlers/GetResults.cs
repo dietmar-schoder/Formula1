@@ -22,6 +22,8 @@ public class GetResults(
         var results = await _dbContext.FORMULA1_Results
             .AsNoTracking()
             .Include(r => r.Session)
+                .ThenInclude(s => s.Race)
+                    .ThenInclude(s => s.GrandPrix)
             .Include(r => r.Driver)
             .Include(r => r.Constructor)
             .OrderByDescending(r => r.Session.Race.SeasonYear)

@@ -51,7 +51,7 @@ Accept: application/json
 
 ### Results
 
-GET {{Formula1.Api_HostAddress}}/api/results?pagenumber=1&pagesize=100
+GET {{Formula1.Api_HostAddress}}/api/results?pagenumber=1&pagesize=5
 Accept: application/json
 
 ### Result
