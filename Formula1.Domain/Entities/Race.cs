@@ -9,6 +9,8 @@ public class Race
 
     public int Round { get; set; }
 
+    public string WikipediaUrl { get; set; }
+
     public Guid CircuitId { get; set; }
     public Circuit Circuit { get; set; }
 
@@ -16,6 +18,4 @@ public class Race
     public GrandPrix GrandPrix { get; set; }
 
     public ICollection<Session> Sessions { get; set; }
-
-    public static Race Create() => new() { Id = Guid.NewGuid() };
 }

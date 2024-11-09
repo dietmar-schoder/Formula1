@@ -6,7 +6,7 @@ public class GrandPrix
 
     public string Name { get; set; }
 
-    public ICollection<Race> Races { get; set; }
+    public string WikipediaUrl { get; set; }
 
-    public static GrandPrix Create() => new() { Id = Guid.NewGuid() };
+    public ICollection<Race> Races { get; set; }
 }

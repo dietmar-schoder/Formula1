@@ -7,6 +7,4 @@ public class Season
     public string WikipediaUrl { get; set; }
 
     public ICollection<Race> Races { get; set; }
-
-    public static Season Create(int year) => new() { Year = year };
 }

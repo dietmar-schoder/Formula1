@@ -6,6 +6,8 @@ public class Result
 
     public int Position { get; set; }
 
+    public string Ranking { get; set; }
+
     public int Points { get; set; }
 
     public TimeSpan Time { get; set; }
@@ -18,6 +20,4 @@ public class Result
 
     public Guid ConstructorId { get; set; }
     public Constructor Constructor { get; set; }
-
-    public static Result Create() => new() { Id = Guid.NewGuid() };
 }

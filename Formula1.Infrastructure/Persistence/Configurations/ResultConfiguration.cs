@@ -8,5 +8,6 @@ public class ResultConfiguration
     public static void Configure(EntityTypeBuilder<Result> builder)
     {
         builder.HasKey(e => e.Id);
+        builder.Property(e => e.Ranking).HasMaxLength(63);
     }
 }

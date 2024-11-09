@@ -6,7 +6,7 @@ public class Driver
 
     public string Name { get; set; }
 
-    public ICollection<Result> Results { get; set; }
+    public string WikipediaUrl { get; set; }
 
-    public static Driver Create() => new() { Id = Guid.NewGuid() };
+    public ICollection<Result> Results { get; set; }
 }
