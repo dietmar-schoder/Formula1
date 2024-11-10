@@ -11,13 +11,24 @@ public static class SeasonsEndpoints
     {
         app.MapGet("/api/seasons", ListSeasonsAsync);
         app.MapGet("/api/seasons/{year:int}", GetSeasonAsync);
+        app.MapGet("/api/seasons/{year:int}/drivers", GetSeasonDriversAsync);
+        app.MapGet("/api/seasons/{year:int}/constructors", GetSeasonConstructorsAsync);
+        app.MapGet("/api/seasons/{year:int}/races", GetSeasonAsync);
 
-        static async Task<IResult> ListSeasonsAsync(IMediator mediator,
-            int pageNumber = 1,
-            int PageSize = 20)
+        app.MapGet("/api/seasons/{year:int}/circuits", GetSeasonAsync);
+        // app.MapGet("/api/seasons/{year:int}/sessions", GetSeasonAsync);
+        app.MapGet("/api/seasons/{year:int}/results", GetSeasonAsync);
+
+        static async Task<IResult> ListSeasonsAsync(IMediator mediator, int pageNumber = 1, int PageSize = 20)
             => Results.Ok(await mediator.Send(new GetSeasons.Query(pageNumber, PageSize)));
 
-        static async Task<IResult> GetSeasonAsync(int year, IMediator mediator, IScopedErrorService errorService)
+        static async Task<IResult> GetSeasonAsync(IMediator mediator, IScopedErrorService errorService, int year)
             => await mediator.SendQueryAsync(new GetSeasonByYearQuery(year), errorService);
+
+        static async Task<IResult> GetSeasonDriversAsync(IMediator mediator, IScopedErrorService errorService, int year)
+            => await mediator.SendQueryAsync(new GetSeasonDrivers.Query(year), errorService);
+
+        static async Task<IResult> GetSeasonConstructorsAsync(IMediator mediator, IScopedErrorService errorService, int year)
+            => await mediator.SendQueryAsync(new GetSeasonConstructors.Query(year), errorService);
     }
 }

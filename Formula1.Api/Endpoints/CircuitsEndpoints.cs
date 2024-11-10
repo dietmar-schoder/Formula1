@@ -12,6 +12,13 @@ public static class CircuitsEndpoints
         app.MapGet("/api/circuits", ListCircuitsAsync);
         app.MapGet("/api/circuits/{id:guid}", GetCircuitAsync);
 
+        app.MapGet("/api/circuits/{id:guid}/races", GetCircuitAsync);
+        // app.MapGet("/api/circuits/{id:guid}/sessions", GetCircuitAsync);
+        app.MapGet("/api/circuits/{id:guid}/seasons", GetCircuitAsync);
+        app.MapGet("/api/circuits/{id:guid}/results", GetCircuitAsync);
+        app.MapGet("/api/circuits/{id:guid}/drivers", GetCircuitAsync);
+        app.MapGet("/api/circuits/{id:guid}/constructors", GetCircuitAsync);
+
         static async Task<IResult> ListCircuitsAsync(IMediator mediator,
             int pageNumber = 1,
             int PageSize = 20)

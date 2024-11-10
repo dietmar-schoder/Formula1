@@ -12,6 +12,11 @@ public static class RacesEndpoints
         app.MapGet("/api/races", ListRacesAsync);
         app.MapGet("/api/races/{id:guid}", GetRaceAsync);
 
+        app.MapGet("/api/races/{id:guid}/sessions", GetRaceAsync);
+        app.MapGet("/api/races/{id:guid}/results", GetRaceAsync);
+        app.MapGet("/api/races/{id:guid}/constructors", GetRaceAsync);
+        app.MapGet("/api/races/{id:guid}/drivers", GetRaceAsync);
+
         static async Task<IResult> ListRacesAsync(IMediator mediator,
             int pageNumber = 1,
             int PageSize = 20)

@@ -1,0 +1,21 @@
+﻿@Formula1.Api_HostAddress = https://localhost:7277
+
+### Seasons
+
+GET {{Formula1.Api_HostAddress}}/api/seasons?pagenumber=3&pagesize=4
+Accept: application/json
+
+### Season
+
+GET {{Formula1.Api_HostAddress}}/api/seasons/2023
+Accept: application/json
+
+### Season Constructors
+
+GET {{Formula1.Api_HostAddress}}/api/seasons/1991/constructors
+Accept: application/json
+
+### Season Drivers
+
+GET {{Formula1.Api_HostAddress}}/api/seasons/1974/drivers
+Accept: application/json

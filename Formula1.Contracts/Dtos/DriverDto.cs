@@ -1,3 +1,3 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public record DriverDto(Guid Id, string Name);
+public record DriverDto(Guid Id, string Name, string WikipediaUrl);

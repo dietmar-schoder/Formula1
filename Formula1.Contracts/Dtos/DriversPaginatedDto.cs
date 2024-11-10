@@ -1,7 +1,7 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public record DriversPaginatedDto(
-    List<DriverDto> Drivers,
+public record DriversPaginatedDto<T>(
+    List<T> Drivers,
     int PageNumber,
     int PageSize,
     int TotalCount);

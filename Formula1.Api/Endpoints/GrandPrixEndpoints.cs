@@ -12,6 +12,14 @@ public static class GrandPrixEndpoints
         app.MapGet("/api/grandprix", ListGrandPrixAsync);
         app.MapGet("/api/grandprix/{id:guid}", GetGrandPrixAsync);
 
+        app.MapGet("/api/grandprix/{id:guid}/races", GetGrandPrixAsync);
+        app.MapGet("/api/grandprix/{id:guid}/seasons", GetGrandPrixAsync);
+        app.MapGet("/api/grandprix/{id:guid}/circuits", GetGrandPrixAsync);
+        // app.MapGet("/api/grandprix/{id:guid}/sessions", GetGrandPrixAsync);
+        app.MapGet("/api/grandprix/{id:guid}/results", GetGrandPrixAsync);
+        app.MapGet("/api/grandprix/{id:guid}/constructors", GetGrandPrixAsync);
+        app.MapGet("/api/grandprix/{id:guid}/drivers", GetGrandPrixAsync);
+
         static async Task<IResult> ListGrandPrixAsync(IMediator mediator,
             int pageNumber = 1,
             int PageSize = 20)

@@ -1,7 +1,7 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public record ConstructorsPaginatedDto(
-    List<ConstructorDto> Constructors,
+public record ConstructorsPaginatedDto<T>(
+    List<T> Constructors,
     int PageNumber,
     int PageSize,
     int TotalCount);

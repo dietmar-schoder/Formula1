@@ -12,6 +12,10 @@ public static class SessionsEndpoints
         app.MapGet("/api/sessions", ListSessionsAsync);
         app.MapGet("/api/sessions/{id:guid}", GetSessionAsync);
 
+        app.MapGet("/api/sessions/{id:guid}/results", GetSessionAsync);
+        app.MapGet("/api/sessions/{id:guid}/constructors", GetSessionAsync);
+        app.MapGet("/api/sessions/{id:guid}/drivers", GetSessionAsync);
+
         static async Task<IResult> ListSessionsAsync(IMediator mediator,
             int pageNumber = 1,
             int PageSize = 20)

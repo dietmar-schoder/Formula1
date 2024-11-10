@@ -12,6 +12,11 @@ public static class ConstructorsEndpoints
         app.MapGet("/api/constructors", ListConstructorsAsync);
         app.MapGet("/api/constructors/{id:guid}", GetConstructorAsync);
 
+        app.MapGet("/api/constructors/{id:guid}/results", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:guid}/drivers", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:guid}/races", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:guid}/seasons", GetConstructorAsync);
+
         static async Task<IResult> ListConstructorsAsync(
             IMediator mediator,
             int pageNumber = 1,

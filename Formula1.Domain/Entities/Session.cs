@@ -13,6 +13,4 @@ public class Session
     public Race Race { get; set; }
 
     public ICollection<Result> Results { get; set; }
-
-    public static Session Create() => new() { Id = Guid.NewGuid() };
 }

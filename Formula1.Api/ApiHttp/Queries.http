@@ -59,16 +59,6 @@ Accept: application/json
 GET {{Formula1.Api_HostAddress}}/api/results/c0d82c1b-849c-4f75-b14f-c70f57df9f82
 Accept: application/json
 
-### Seasons
-
-GET {{Formula1.Api_HostAddress}}/api/seasons?pagenumber=3&pagesize=4
-Accept: application/json
-
-### Season
-
-GET {{Formula1.Api_HostAddress}}/api/seasons/2023
-Accept: application/json
-
 ### Sessions
 
 GET {{Formula1.Api_HostAddress}}/api/sessions?pagenumber=1&pagesize=2
