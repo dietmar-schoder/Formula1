@@ -28,9 +28,9 @@ public class GetSessions(
                 .ThenInclude(r => r.GrandPrix)
             .Include(s => s.Race)
                 .ThenInclude(r => r.Circuit)
-            .OrderBy(s => s.SessionType)
-                .ThenByDescending(s => s.Race.SeasonYear)
+            .OrderByDescending(s => s.Race.SeasonYear)
                 .ThenBy(s => s.Race.Round)
+                .ThenBy(s => s.SessionType)
             .Skip((query.PageNumber - 1) * query.PageSize)
             .Take(query.PageSize)
             .ToListAsync(cancellationToken);
