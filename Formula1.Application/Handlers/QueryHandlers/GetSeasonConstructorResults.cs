@@ -12,12 +12,13 @@ public class GetSeasonConstructorResults(
     IScopedLogService logService,
     IScopedErrorService errorService)
     : HandlerBase(dbContext, logService, errorService),
-        IRequestHandler<GetSeasonConstructorResults.Query, ResultsPaginatedDto>
+        IRequestHandler<GetSeasonConstructorResults.Query, ResultsPaginatedDto<ConstructorResultDto>>
 {
-    public record Query(int Year, Guid ConstructorId) : IRequest<ResultsPaginatedDto> { }
+    public record Query(int Year, Guid ConstructorId) : IRequest<ResultsPaginatedDto<ConstructorResultDto>> { }
 
-    public async Task<ResultsPaginatedDto> Handle(Query query, CancellationToken cancellationToken)
+    public async Task<ResultsPaginatedDto<ConstructorResultDto>> Handle(Query query, CancellationToken cancellationToken)
     {
+        var resultDtos = new List<ConstructorResultDto>();
         var results = await _dbContext.FORMULA1_Results
             .Where(r => r.ConstructorId == query.ConstructorId &&
                         r.Session.Race.SeasonYear == query.Year)
@@ -27,12 +28,31 @@ public class GetSeasonConstructorResults(
                 .ThenInclude(s => s.Race)
                     .ThenInclude(r => r.GrandPrix)
             .Include(r => r.Session)
+                .ThenInclude(s => s.Race)
+                    .ThenInclude(r => r.Circuit)
+            .Include(r => r.Session)
                 .ThenInclude(s => s.SessionType)
             .OrderBy(r => r.Session.Race.Round)
                 .ThenBy(r => r.Position)
             .ToListAsync(cancellationToken);
-        return new ResultsPaginatedDto(
-            results.Adapt<List<ResultDto>>(),
+        foreach (var result in results)
+        {
+            var resultDto = result.Adapt<ConstructorResultDto>();
+            resultDto.ConstructorName = result.Constructor.Name;
+            resultDto.DriverName = result.Driver.Name;
+            resultDto.SessionTypeId = result.Session.SessionTypeId;
+            resultDto.SessionTypeDescription = result.Session.SessionType.Description;
+            resultDto.RaceId = result.Session.RaceId;
+            resultDto.SeasonYear = result.Session.Race.SeasonYear;
+            resultDto.Round = result.Session.Race.Round;
+            resultDto.GrandPrixId = result.Session.Race.GrandPrixId;
+            resultDto.GrandPrixName = result.Session.Race.GrandPrix.Name;
+            resultDto.CircuitId = result.Session.Race.CircuitId;
+            resultDto.CircuitName = result.Session.Race.Circuit.Name;
+            resultDtos.Add(resultDto);
+        }
+        return new ResultsPaginatedDto<ConstructorResultDto>(
+            resultDtos,
             1,
             results.Count,
             results.Count);

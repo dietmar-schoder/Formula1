@@ -12,11 +12,11 @@ public class GetSeasonDriverResults(
     IScopedLogService logService,
     IScopedErrorService errorService)
     : HandlerBase(dbContext, logService, errorService),
-        IRequestHandler<GetSeasonDriverResults.Query, ResultsPaginatedDto>
+        IRequestHandler<GetSeasonDriverResults.Query, ResultsPaginatedDto<ResultDto>>
 {
-    public record Query(int Year, Guid DriverId) : IRequest<ResultsPaginatedDto> { }
+    public record Query(int Year, Guid DriverId) : IRequest<ResultsPaginatedDto<ResultDto>> { }
 
-    public async Task<ResultsPaginatedDto> Handle(Query query, CancellationToken cancellationToken)
+    public async Task<ResultsPaginatedDto<ResultDto>> Handle(Query query, CancellationToken cancellationToken)
     {
         var results = await _dbContext.FORMULA1_Results
             .Where(r => r.DriverId == query.DriverId &&
@@ -30,7 +30,7 @@ public class GetSeasonDriverResults(
                 .ThenInclude(s => s.SessionType)
             .OrderBy(r => r.Session.Race.Round)
             .ToListAsync(cancellationToken);
-        return new ResultsPaginatedDto(
+        return new ResultsPaginatedDto<ResultDto>(
             results.Adapt<List<ResultDto>>(),
             1,
             results.Count,

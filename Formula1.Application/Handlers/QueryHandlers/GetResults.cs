@@ -11,11 +11,11 @@ public class GetResults(
     IApplicationDbContext dbContext,
     IScopedLogService logService,
     IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetResults.Query, ResultsPaginatedDto>
+    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetResults.Query, ResultsPaginatedDto<ResultDto>>
 {
-    public record Query(int PageNumber, int PageSize) : IRequest<ResultsPaginatedDto> { }
+    public record Query(int PageNumber, int PageSize) : IRequest<ResultsPaginatedDto<ResultDto>> { }
 
-    public async Task<ResultsPaginatedDto> Handle(Query query, CancellationToken cancellationToken)
+    public async Task<ResultsPaginatedDto<ResultDto>> Handle(Query query, CancellationToken cancellationToken)
     {
         Log();
         var totalCount = await _dbContext.FORMULA1_Results.CountAsync(cancellationToken);
@@ -34,7 +34,7 @@ public class GetResults(
             .Take(query.PageSize)
             .ToListAsync(cancellationToken);
         Log(results.Count.ToString(), nameof(results.Count));
-        return new ResultsPaginatedDto(
+        return new ResultsPaginatedDto<ResultDto>(
             results.Adapt<List<ResultDto>>(),
             query.PageNumber,
             query.PageSize,
