@@ -1,7 +1,7 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
 public record CircuitRacesDto(
-    Guid Id,
+    int Id,
     string Name,
     ICollection<RaceDto> Races)
     : CircuitDto(Id, Name);

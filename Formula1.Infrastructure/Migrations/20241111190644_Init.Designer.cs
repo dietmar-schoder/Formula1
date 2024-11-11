@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Formula1.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241109160215_NewTableFieldsWikipediaUrl")]
-    partial class NewTableFieldsWikipediaUrl
+    [Migration("20241111190644_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,11 @@ namespace Formula1.Infrastructure.Migrations
 
             modelBuilder.Entity("Formula1.Domain.Entities.Circuit", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -47,9 +49,11 @@ namespace Formula1.Infrastructure.Migrations
 
             modelBuilder.Entity("Formula1.Domain.Entities.Constructor", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -67,9 +71,11 @@ namespace Formula1.Infrastructure.Migrations
 
             modelBuilder.Entity("Formula1.Domain.Entities.Driver", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -87,9 +93,11 @@ namespace Formula1.Infrastructure.Migrations
 
             modelBuilder.Entity("Formula1.Domain.Entities.GrandPrix", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -107,15 +115,17 @@ namespace Formula1.Infrastructure.Migrations
 
             modelBuilder.Entity("Formula1.Domain.Entities.Race", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("CircuitId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("GrandPrixId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("CircuitId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GrandPrixId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Round")
                         .HasColumnType("int");
@@ -140,15 +150,17 @@ namespace Formula1.Infrastructure.Migrations
 
             modelBuilder.Entity("Formula1.Domain.Entities.Result", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("ConstructorId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("DriverId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ConstructorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Points")
                         .HasColumnType("int");
@@ -160,8 +172,8 @@ namespace Formula1.Infrastructure.Migrations
                         .HasMaxLength(63)
                         .HasColumnType("nvarchar(63)");
 
-                    b.Property<Guid>("SessionId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("SessionId")
+                        .HasColumnType("int");
 
                     b.Property<TimeSpan>("Time")
                         .HasColumnType("time");
@@ -193,12 +205,14 @@ namespace Formula1.Infrastructure.Migrations
 
             modelBuilder.Entity("Formula1.Domain.Entities.Session", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("RaceId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("RaceId")
+                        .HasColumnType("int");
 
                     b.Property<int>("SessionTypeId")
                         .HasColumnType("int");
@@ -234,9 +248,7 @@ namespace Formula1.Infrastructure.Migrations
                 {
                     b.HasOne("Formula1.Domain.Entities.Circuit", "Circuit")
                         .WithMany("Races")
-                        .HasForeignKey("CircuitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CircuitId");
 
                     b.HasOne("Formula1.Domain.Entities.GrandPrix", "GrandPrix")
                         .WithMany("Races")

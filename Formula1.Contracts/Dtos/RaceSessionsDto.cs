@@ -1,7 +1,7 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
 public record RaceSessionsDto(
-    Guid Id,
+    int Id,
     int SeasonYear,
     int Round,
     SeasonDto Season,

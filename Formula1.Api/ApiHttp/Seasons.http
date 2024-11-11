@@ -7,25 +7,25 @@ Accept: application/json
 
 ### Season
 
-GET {{Formula1.Api_HostAddress}}/api/seasons/2023
+GET {{Formula1.Api_HostAddress}}/api/seasons/1950
 Accept: application/json
 
 ### Season Constructors
 
-GET {{Formula1.Api_HostAddress}}/api/seasons/2024/constructors
+GET {{Formula1.Api_HostAddress}}/api/seasons/1951/constructors
 Accept: application/json
 
 ### Season Constructor Results
 
-GET {{Formula1.Api_HostAddress}}/api/seasons/2024/constructors/1e3e6c23-ebbe-4dd7-b0af-6caa158a8ab3/results
+GET {{Formula1.Api_HostAddress}}/api/seasons/1950/constructors/24/results
 Accept: application/json
 
 ### Season Drivers
 
-GET {{Formula1.Api_HostAddress}}/api/seasons/2023/drivers
+GET {{Formula1.Api_HostAddress}}/api/seasons/1954/drivers
 Accept: application/json
 
 ### Season Driver Results
 
-GET {{Formula1.Api_HostAddress}}/api/seasons/2023/drivers/b4c1a79d-c3b1-4179-bf53-37864d22672a/results
+GET {{Formula1.Api_HostAddress}}/api/seasons/1950/drivers/5/results
 Accept: application/json

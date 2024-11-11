@@ -8,6 +8,7 @@ public class RaceConfiguration
     public static void Configure(EntityTypeBuilder<Race> builder)
     {
         builder.HasKey(e => e.Id);
+        builder.Property(e => e.Id).ValueGeneratedOnAdd();
         builder.Property(e => e.WikipediaUrl).HasMaxLength(1023);
     }
 }

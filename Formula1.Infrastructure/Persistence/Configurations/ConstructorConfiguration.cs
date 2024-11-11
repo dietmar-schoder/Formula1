@@ -8,6 +8,7 @@ public class ConstructorConfiguration
     public static void Configure(EntityTypeBuilder<Constructor> builder)
     {
         builder.HasKey(e => e.Id);
+        builder.Property(e => e.Id).ValueGeneratedOnAdd();
         builder.Property(e => e.Name).IsRequired().HasMaxLength(1023);
         builder.Property(e => e.WikipediaUrl).HasMaxLength(1023);
     }

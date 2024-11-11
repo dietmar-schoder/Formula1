@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Formula1.Application.Queries;
 
-public class GetDriverByIdQuery(Guid id) : IRequest<DriverDto>
+public class GetDriverByIdQuery(int id) : IRequest<DriverDto>
 {
-    public Guid Id { get; set; } = id;
+    public int Id { get; set; } = id;
 }

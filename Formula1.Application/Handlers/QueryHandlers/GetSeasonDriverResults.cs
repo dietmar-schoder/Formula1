@@ -14,7 +14,7 @@ public class GetSeasonDriverResults(
     : HandlerBase(dbContext, logService, errorService),
         IRequestHandler<GetSeasonDriverResults.Query, ResultsPaginatedDto<ResultDto>>
 {
-    public record Query(int Year, Guid DriverId) : IRequest<ResultsPaginatedDto<ResultDto>> { }
+    public record Query(int Year, int DriverId) : IRequest<ResultsPaginatedDto<ResultDto>> { }
 
     public async Task<ResultsPaginatedDto<ResultDto>> Handle(Query query, CancellationToken cancellationToken)
     {

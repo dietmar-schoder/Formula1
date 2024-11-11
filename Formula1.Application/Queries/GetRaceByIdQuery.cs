@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Formula1.Application.Queries;
 
-public class GetRaceByIdQuery(Guid id) : IRequest<RaceSessionsDto>
+public class GetRaceByIdQuery(int id) : IRequest<RaceSessionsDto>
 {
-    public Guid Id { get; set; } = id;
+    public int Id { get; set; } = id;
 }

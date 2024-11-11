@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Formula1.Application.Queries;
 
-public class GetConstructorByIdQuery(Guid id) : IRequest<ConstructorDto>
+public class GetConstructorByIdQuery(int id) : IRequest<ConstructorDto>
 {
-    public Guid Id { get; set; } = id;
+    public int Id { get; set; } = id;
 }

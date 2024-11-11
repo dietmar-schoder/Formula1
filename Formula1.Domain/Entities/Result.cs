@@ -2,7 +2,7 @@
 
 public class Result
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public int Position { get; set; }
 
@@ -12,12 +12,12 @@ public class Result
 
     public TimeSpan Time { get; set; }
 
-    public Guid SessionId { get; set; }
+    public int SessionId { get; set; }
     public Session Session { get; set; }
 
-    public Guid DriverId { get; set; }
+    public int DriverId { get; set; }
     public Driver Driver { get; set; }
 
-    public Guid ConstructorId { get; set; }
+    public int ConstructorId { get; set; }
     public Constructor Constructor { get; set; }
 }

@@ -14,7 +14,7 @@ public class GetSeasonConstructorResults(
     : HandlerBase(dbContext, logService, errorService),
         IRequestHandler<GetSeasonConstructorResults.Query, ResultsPaginatedDto<ConstructorResultDto>>
 {
-    public record Query(int Year, Guid ConstructorId) : IRequest<ResultsPaginatedDto<ConstructorResultDto>> { }
+    public record Query(int Year, int ConstructorId) : IRequest<ResultsPaginatedDto<ConstructorResultDto>> { }
 
     public async Task<ResultsPaginatedDto<ConstructorResultDto>> Handle(Query query, CancellationToken cancellationToken)
     {
@@ -47,7 +47,7 @@ public class GetSeasonConstructorResults(
             resultDto.Round = result.Session.Race.Round;
             resultDto.GrandPrixId = result.Session.Race.GrandPrixId;
             resultDto.GrandPrixName = result.Session.Race.GrandPrix.Name;
-            resultDto.CircuitId = result.Session.Race.CircuitId;
+            resultDto.CircuitId = result.Session.Race.CircuitId ?? 0;
             resultDto.CircuitName = result.Session.Race.Circuit.Name;
             resultDtos.Add(resultDto);
         }

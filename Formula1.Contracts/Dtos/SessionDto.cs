@@ -1,7 +1,7 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
 public record SessionDto(
-    Guid Id,
+    int Id,
     DateTime StartDateTimeUtc,
     SessionTypeDto SessionType,
     RaceDto Race);

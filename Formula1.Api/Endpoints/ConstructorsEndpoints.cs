@@ -10,20 +10,17 @@ public static class ConstructorsEndpoints
     public static void MapConstructorsEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapGet("/api/constructors", ListConstructorsAsync);
-        app.MapGet("/api/constructors/{id:guid}", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:int}", GetConstructorAsync);
 
-        app.MapGet("/api/constructors/{id:guid}/results", GetConstructorAsync);
-        app.MapGet("/api/constructors/{id:guid}/drivers", GetConstructorAsync);
-        app.MapGet("/api/constructors/{id:guid}/races", GetConstructorAsync);
-        app.MapGet("/api/constructors/{id:guid}/seasons", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:int}/results", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:int}/drivers", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:int}/races", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:int}/seasons", GetConstructorAsync);
 
-        static async Task<IResult> ListConstructorsAsync(
-            IMediator mediator,
-            int pageNumber = 1,
-            int PageSize = 20)
+        static async Task<IResult> ListConstructorsAsync(IMediator mediator, int pageNumber = 1, int PageSize = 20)
             => Results.Ok(await mediator.Send(new GetConstructors.Query(pageNumber, PageSize)));
 
-        static async Task<IResult> GetConstructorAsync(Guid id, IMediator mediator, IScopedErrorService errorService)
+        static async Task<IResult> GetConstructorAsync(int id, IMediator mediator, IScopedErrorService errorService)
             => await mediator.SendQueryAsync(new GetConstructorByIdQuery(id), errorService);
     }
 }

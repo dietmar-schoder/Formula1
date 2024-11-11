@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Formula1.Application.Queries;
 
-public class GetGrandPrixByIdQuery(Guid id) : IRequest<GrandPrixRacesDto>
+public class GetGrandPrixByIdQuery(int id) : IRequest<GrandPrixRacesDto>
 {
-    public Guid Id { get; set; } = id;
+    public int Id { get; set; } = id;
 }

@@ -1,5 +1,5 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
 public record CircuitDto(
-    Guid Id,
+    int Id,
     string Name);
