@@ -6,19 +6,13 @@ using Formula1.Infrastructure.Middlewares;
 using Formula1.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 
 #region Services
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Formula 1 API Reference", Version = "1.0" });
-});
 
 builder.Services.Configure<JsonOptions>(options =>
 {
@@ -34,6 +28,7 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
+builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -49,13 +44,11 @@ builder.Services.AddInfrastructureServices(builder.Environment);
 var app = builder.Build();
 
 app.UseCors("AllowAllOrigins");
+app.MapOpenApi();
+
 app.UseMiddleware<GlobalHttpRequestMiddleware>();
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
-app.UseSwagger(options =>
-{
-    options.RouteTemplate = "openapi/{documentName}.json";
-});
 app.MapScalarApiReference(options =>
 {
     options
