@@ -17,7 +17,7 @@ public class GetSessions(
 
     public async Task<SessionsPaginatedDto> Handle(Query query, CancellationToken cancellationToken)
     {
-        Log();
+        var pageSize = Math.Min(query.PageSize, 100);
         var totalCount = await _dbContext.FORMULA1_Sessions.CountAsync(cancellationToken);
         var sessions = await _dbContext.FORMULA1_Sessions
             .AsNoTracking()
@@ -31,14 +31,13 @@ public class GetSessions(
             .OrderByDescending(s => s.Race.SeasonYear)
                 .ThenBy(s => s.Race.Round)
                 .ThenBy(s => s.SessionType)
-            .Skip((query.PageNumber - 1) * query.PageSize)
-            .Take(query.PageSize)
+            .Skip((query.PageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
-        Log(sessions.Count.ToString(), nameof(sessions.Count));
         return new SessionsPaginatedDto(
             sessions.Adapt<List<SessionDto>>(),
             query.PageNumber,
-            query.PageSize,
+            pageSize,
             totalCount);
     }
 }

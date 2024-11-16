@@ -17,6 +17,7 @@ public class GetResults(
 
     public async Task<ResultsPaginatedDto<ConstructorResultDto>> Handle(Query query, CancellationToken cancellationToken)
     {
+        var pageSize = Math.Min(query.PageSize, 100);
         var resultDtos = new List<ConstructorResultDto>();
         var totalCount = await _dbContext.FORMULA1_Results.CountAsync(cancellationToken);
         var results = await _dbContext.FORMULA1_Results
@@ -32,8 +33,8 @@ public class GetResults(
                 .ThenBy(r => r.Session.Race.Round)
                 .ThenBy(r => r.Session.SessionTypeId)
                 .ThenBy(r => r.Position)
-            .Skip((query.PageNumber - 1) * query.PageSize)
-            .Take(query.PageSize)
+            .Skip((query.PageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
         foreach (var result in results)
         {
@@ -48,14 +49,12 @@ public class GetResults(
             resultDto.Round = result.Session.Race.Round;
             resultDto.GrandPrixId = result.Session.Race.GrandPrixId;
             resultDto.GrandPrixName = result.Session.Race.GrandPrix.Name;
-            //resultDto.CircuitId = result.Session.Race.CircuitId ?? 0;
-            //resultDto.CircuitName = result.Session.Race.Circuit.Name;
             resultDtos.Add(resultDto);
         }
         return new ResultsPaginatedDto<ConstructorResultDto>(
             resultDtos,
             query.PageNumber,
-            query.PageSize,
+            pageSize,
             totalCount);
     }
 }

@@ -18,19 +18,18 @@ public class GetConstructors(
 
     public async Task<ConstructorsPaginatedDto<ConstructorDto>> Handle(Query query, CancellationToken cancellationToken)
     {
-        Log();
+        var pageSize = Math.Min(query.PageSize, 100);
         var totalCount = await _dbContext.FORMULA1_Constructors.CountAsync(cancellationToken);
         var constructors = await _dbContext.FORMULA1_Constructors
             .AsNoTracking()
             .OrderBy(e => e.Name)
-            .Skip((query.PageNumber - 1) * query.PageSize)
-            .Take(query.PageSize)
+            .Skip((query.PageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
-        Log(constructors.Count.ToString(), nameof(constructors.Count));
         return new ConstructorsPaginatedDto<ConstructorDto>(
             constructors.Adapt<List<ConstructorDto>>(),
             query.PageNumber,
-            query.PageSize,
+            pageSize,
             totalCount);
     }
 }

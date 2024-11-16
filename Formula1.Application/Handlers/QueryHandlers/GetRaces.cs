@@ -17,7 +17,7 @@ public class GetRaces(
 
     public async Task<RacesPaginatedDto> Handle(Query query, CancellationToken cancellationToken)
     {
-        Log();
+        var pageSize = Math.Min(query.PageSize, 100);
         var totalCount = await _dbContext.FORMULA1_Races.CountAsync(cancellationToken);
         var races = await _dbContext.FORMULA1_Races
             .AsNoTracking()
@@ -26,14 +26,13 @@ public class GetRaces(
             .Include(r => r.Circuit)
             .OrderByDescending(e => e.SeasonYear)
                 .ThenBy(r => r.Round)
-            .Skip((query.PageNumber - 1) * query.PageSize)
-            .Take(query.PageSize)
+            .Skip((query.PageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
-        Log(races.Count.ToString(), nameof(races.Count));
         return new RacesPaginatedDto(
             races.Adapt<List<RaceDto>>(),
             query.PageNumber,
-            query.PageSize,
+            pageSize,
             totalCount);
     }
 }

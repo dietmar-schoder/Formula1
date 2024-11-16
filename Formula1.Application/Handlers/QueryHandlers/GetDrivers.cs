@@ -18,19 +18,18 @@ public class GetDrivers(
 
     public async Task<DriversPaginatedDto<DriverDto>> Handle(Query query, CancellationToken cancellationToken)
     {
-        Log();
+        var pageSize = Math.Min(query.PageSize, 100);
         var totalCount = await _dbContext.FORMULA1_Drivers.CountAsync(cancellationToken);
         var drivers = await _dbContext.FORMULA1_Drivers
             .AsNoTracking()
             .OrderBy(e => e.Name)
-            .Skip((query.PageNumber - 1) * query.PageSize)
-            .Take(query.PageSize)
+            .Skip((query.PageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
-        Log(drivers.Count.ToString(), nameof(drivers.Count));
         return new DriversPaginatedDto<DriverDto>(
             drivers.Adapt<List<DriverDto>>(),
             query.PageNumber,
-            query.PageSize,
+            pageSize,
             totalCount);
     }
 }
