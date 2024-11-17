@@ -1,9 +1,9 @@
-﻿using Formula1.Contracts.Dtos;
-using MediatR;
+﻿//using Formula1.Contracts.Dtos;
+//using MediatR;
 
-namespace Formula1.Application.Queries;
+//namespace Formula1.Application.Queries;
 
-public class GetRaceByIdQuery(int id) : IRequest<RaceSessionsDto>
-{
-    public int Id { get; set; } = id;
-}
+//public class GetRaceByIdQuery(int id) : IRequest<RaceSessionsDto>
+//{
+//    public int Id { get; set; } = id;
+//}

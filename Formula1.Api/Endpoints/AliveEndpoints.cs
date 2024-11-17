@@ -10,18 +10,18 @@ public static class AliveEndpoints
     {
         app.MapGet("/", GetVersionAsync);
         app.MapGet("/api", GetVersionAsync);
-        app.MapGet("/error", ThrowError);
+        //app.MapGet("/error", ThrowError);
 
         static async Task<IResult> GetVersionAsync(IMediator mediator)
             => Results.Ok(await mediator.Send(new GetVersion.Query()));
 
-        static IResult ThrowError(IScopedLogService logService)
-        {
-            logService.Log("Before error");
-            var zero = 0;
-            var y = 1 / zero;
-            logService.Log("After error");
-            return Results.Ok();
-        }
+        //static IResult ThrowError(IScopedLogService logService)
+        //{
+        //    logService.Log("Before error");
+        //    var zero = 0;
+        //    var y = 1 / zero;
+        //    logService.Log("After error");
+        //    return Results.Ok();
+        //}
     }
 }

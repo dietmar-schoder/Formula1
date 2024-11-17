@@ -1,20 +1,23 @@
 ﻿namespace Formula1.Contracts.Dtos;
 
-public class ResultDto
+public record ResultDto
 {
     public int Id { get; set; }
-
     public int Position { get; set; }
-
     public string Ranking { get; set; }
-
-    public int Points { get; set; }
-
-    public TimeSpan Time { get; set; }
-
-    public SessionDto Session { get; set; }
-
-    public DriverDto Driver { get; set; }
-
-    public ConstructorDto Constructor { get; set; }
+    public decimal Points { get; set; }
+    public int ConstructorId { get; set; }
+    public string ConstructorName { get; set; }
+    public int DriverId { get; set; }
+    public string DriverName { get; set; }
+    public int SessionId { get; set; }
+    public int SessionTypeId { get; set; }
+    public string SessionTypeDescription { get; set; }
+    public int RaceId { get; set; }
+    public int SeasonYear { get; set; }
+    public int Round { get; set; }
+    public int GrandPrixId { get; set; }
+    public string GrandPrixName { get; set; }
+    public int CircuitId { get; set; }
+    public string CircuitName { get; set; }
 }

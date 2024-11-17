@@ -12,13 +12,13 @@ public class GetSeasonConstructorResults(
     IScopedLogService logService,
     IScopedErrorService errorService)
     : HandlerBase(dbContext, logService, errorService),
-        IRequestHandler<GetSeasonConstructorResults.Query, ResultsPaginatedDto<ConstructorResultDto>>
+        IRequestHandler<GetSeasonConstructorResults.Query, ResultsPaginatedDto<ResultDto>>
 {
-    public record Query(int Year, int ConstructorId) : IRequest<ResultsPaginatedDto<ConstructorResultDto>> { }
+    public record Query(int Year, int ConstructorId) : IRequest<ResultsPaginatedDto<ResultDto>> { }
 
-    public async Task<ResultsPaginatedDto<ConstructorResultDto>> Handle(Query query, CancellationToken cancellationToken)
+    public async Task<ResultsPaginatedDto<ResultDto>> Handle(Query query, CancellationToken cancellationToken)
     {
-        var resultDtos = new List<ConstructorResultDto>();
+        var resultDtos = new List<ResultDto>();
         var results = await _dbContext.FORMULA1_Results
             .Where(r => r.ConstructorId == query.ConstructorId &&
                         r.Session.Race.SeasonYear == query.Year)
@@ -37,7 +37,7 @@ public class GetSeasonConstructorResults(
             .ToListAsync(cancellationToken);
         foreach (var result in results)
         {
-            var resultDto = result.Adapt<ConstructorResultDto>();
+            var resultDto = result.Adapt<ResultDto>();
             resultDto.ConstructorName = result.Constructor.Name;
             resultDto.DriverName = result.Driver.Name;
             resultDto.SessionTypeId = result.Session.SessionTypeId;
@@ -51,7 +51,7 @@ public class GetSeasonConstructorResults(
             resultDto.CircuitName = result.Session.Race.Circuit.Name;
             resultDtos.Add(resultDto);
         }
-        return new ResultsPaginatedDto<ConstructorResultDto>(
+        return new ResultsPaginatedDto<ResultDto>(
             resultDtos,
             1,
             results.Count,
