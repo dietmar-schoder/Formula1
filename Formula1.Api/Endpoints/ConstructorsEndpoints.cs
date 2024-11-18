@@ -12,7 +12,7 @@ public static class ConstructorsEndpoints
         app.MapGet("/api/constructors", ListConstructorsAsync);
         app.MapGet("/api/constructors/{id:int}", GetConstructorAsync);
         app.MapGet("/api/constructors/{id:int}/results", GetConstructorResultsAsync);
-        //app.MapGet("/api/constructors/{id:int}/drivers", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:int}/drivers", GetConstructorDriversAsync);
         //app.MapGet("/api/constructors/{id:int}/races", GetConstructorAsync);
         //app.MapGet("/api/constructors/{id:int}/seasons", GetConstructorAsync);
 
@@ -24,5 +24,8 @@ public static class ConstructorsEndpoints
 
         static async Task<IResult> GetConstructorResultsAsync(IMediator mediator, int id, int pageNumber = 1, int pageSize = 20)
             => await mediator.SendQueryAsync(new GetConstructorResults.Query(id, pageNumber, pageSize));
+
+        static async Task<IResult> GetConstructorDriversAsync(IMediator mediator, int id)
+            => await mediator.SendQueryAsync(new GetConstructorDrivers.Query(id));
     }
 }

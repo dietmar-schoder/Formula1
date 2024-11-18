@@ -21,7 +21,6 @@ public class GetSeasonDriverResults(
         var results = await _dbContext.FORMULA1_Results
             .Where(r => r.DriverId == query.DriverId &&
                         r.Session.Race.SeasonYear == query.Year)
-            .Include(r => r.Driver)
             .Include(r => r.Constructor)
             .Include(r => r.Session)
                 .ThenInclude(s => s.Race)
