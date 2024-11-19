@@ -40,19 +40,7 @@ Accept: application/json
 GET {{Formula1.Api_HostAddress}}/api/results/c0d82c1b-849c-4f75-b14f-c70f57df9f82
 Accept: application/json
 
-### Sessions
-
-GET {{Formula1.Api_HostAddress}}/api/sessions?pagenumber=1&pagesize=2
-Accept: application/json
-
-### Session
-
-GET {{Formula1.Api_HostAddress}}/api/sessions/52856ab0-d03b-40f6-a44b-4525bee6398b
-Accept: application/json
-
 ### SessionTypes
 
 GET {{Formula1.Api_HostAddress}}/api/sessiontypes?pagenumber=1&pagesize=20
 Accept: application/json
-
-###

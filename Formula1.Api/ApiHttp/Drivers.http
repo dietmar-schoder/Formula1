@@ -19,5 +19,3 @@ Accept: application/json
 
 GET {{Formula1.Api_HostAddress}}/api/drivers/770/results
 Accept: application/json
-
-###

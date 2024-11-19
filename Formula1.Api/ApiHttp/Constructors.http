@@ -21,5 +21,3 @@ Accept: application/json
 
 GET {{Formula1.Api_HostAddress}}/api/constructors/6/results
 Accept: application/json
-
-###
