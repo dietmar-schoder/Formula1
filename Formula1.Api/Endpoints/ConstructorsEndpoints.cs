@@ -22,10 +22,10 @@ public static class ConstructorsEndpoints
         static async Task<IResult> GetConstructorAsync(int id, IMediator mediator)
             => await mediator.SendQueryAsync(new GetConstructor.Query(id));
 
-        static async Task<IResult> GetConstructorResultsAsync(IMediator mediator, int id, int pageNumber = 1, int pageSize = 20)
-            => await mediator.SendQueryAsync(new GetConstructorResults.Query(id, pageNumber, pageSize));
-
         static async Task<IResult> GetConstructorDriversAsync(IMediator mediator, int id)
             => await mediator.SendQueryAsync(new GetConstructorDrivers.Query(id));
+
+        static async Task<IResult> GetConstructorResultsAsync(IMediator mediator, int id, int pageNumber = 1, int pageSize = 20)
+            => await mediator.SendQueryAsync(new GetConstructorResults.Query(id, pageNumber, pageSize));
     }
 }
