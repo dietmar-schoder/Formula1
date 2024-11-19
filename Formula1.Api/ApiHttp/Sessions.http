@@ -2,7 +2,7 @@
 
 ### Sessions
 
-GET {{Formula1.Api_HostAddress}}/api/sessions?pagenumber=1&pagesize=2
+GET {{Formula1.Api_HostAddress}}/api/sessions?pagenumber=1&pagesize=12
 Accept: application/json
 
 ### Session

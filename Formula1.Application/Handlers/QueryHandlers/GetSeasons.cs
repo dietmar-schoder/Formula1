@@ -1,34 +1,30 @@
 ﻿using Formula1.Application.Interfaces.Persistence;
-using Formula1.Application.Interfaces.Services;
 using Formula1.Contracts.Dtos;
 using Formula1.Contracts.Dtos.PaginatedDtos;
-using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Formula1.Application.Handlers.QueryHandlers;
 
-public class GetSeasons(
-    IApplicationDbContext dbContext,
-    IScopedLogService logService,
-    IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetSeasons.Query, SeasonsPaginatedDto>
+public class GetSeasons(IApplicationDbContext dbContext)
+    : IRequestHandler<GetSeasons.Query, SeasonsPaginatedDto>
 {
+    private readonly IApplicationDbContext _dbContext = dbContext;
+
     public record Query(int PageNumber, int PageSize) : IRequest<SeasonsPaginatedDto> { }
 
     public async Task<SeasonsPaginatedDto> Handle(Query query, CancellationToken cancellationToken)
     {
-        Log();
         var totalCount = await _dbContext.FORMULA1_Seasons.CountAsync(cancellationToken);
-        var seasons = await _dbContext.FORMULA1_Seasons
+        var seasonDtos = await _dbContext.FORMULA1_Seasons
             .AsNoTracking()
-            .OrderByDescending(e => e.Year)
+            .OrderByDescending(s => s.Year)
             .Skip((query.PageNumber - 1) * query.PageSize)
             .Take(query.PageSize)
+            .Select(s => SeasonDto.FromSeason(s))
             .ToListAsync(cancellationToken);
-        Log(seasons.Count.ToString(), nameof(seasons.Count));
         return new SeasonsPaginatedDto(
-            seasons.Adapt<List<SeasonDto>>(),
+            seasonDtos,
             query.PageNumber,
             query.PageSize,
             totalCount);

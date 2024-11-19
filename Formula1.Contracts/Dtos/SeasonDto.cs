@@ -1,8 +1,11 @@
-﻿namespace Formula1.Contracts.Dtos;
+﻿using Formula1.Domain.Entities;
 
-public class SeasonDto
+namespace Formula1.Contracts.Dtos;
+
+public record SeasonDto(int Year, string WikipediaUrl)
 {
-    public int Year { get; set; }
-
-    public string WikipediaUrl { get; set; }
+    public static SeasonDto FromSeason(Season season)
+        => new(
+            Year: season.Year,
+            WikipediaUrl: season.WikipediaUrl);
 }

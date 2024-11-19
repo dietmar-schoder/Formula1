@@ -5,9 +5,14 @@
 GET {{Formula1.Api_HostAddress}}/api/seasons?pagenumber=3&pagesize=10
 Accept: application/json
 
-### Season <<<<<<<<<< Season races !!!!!!!!!!!!>>>>>>>>>>
+### Season
 
 GET {{Formula1.Api_HostAddress}}/api/seasons/1950
+Accept: application/json
+
+### Season races
+
+GET {{Formula1.Api_HostAddress}}/api/seasons/1951/races
 Accept: application/json
 
 ### Season Constructors
