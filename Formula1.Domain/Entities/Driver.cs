@@ -8,5 +8,5 @@ public class Driver
 
     public string WikipediaUrl { get; set; }
 
-    public ICollection<Result> Results { get; set; }
+    public virtual ICollection<Result> Results { get; set; }
 }

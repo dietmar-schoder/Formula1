@@ -2,6 +2,11 @@
 
 ### Alive
 
+GET {{Formula1.Api_HostAddress}}/
+Accept: application/json
+
+### Alive
+
 GET {{Formula1.Api_HostAddress}}/api
 Accept: application/json
 

@@ -7,26 +7,7 @@ Accept: application/json
 
 ### Circuit
 
-GET {{Formula1.Api_HostAddress}}/api/circuits/59efb2a4-be7a-46c0-9e70-551d5e5beb92
-Accept: application/json
-
-### Constructors
-
-GET {{Formula1.Api_HostAddress}}/api/constructors?pagenumber=3&pagesize=4
-Accept: application/json
-
-### Constructor
-
-GET {{Formula1.Api_HostAddress}}/api/constructors/3f85c446-6b80-493c-8dd9-51b918ad3beb
-Accept: application/json
-
-### Drivers
-
-GET {{Formula1.Api_HostAddress}}/api/drivers?pagenumber=3&pagesize=4
-
-### Driver
-
-GET {{Formula1.Api_HostAddress}}/api/drivers/761f2a01-7007-49d1-84d6-3c5459a2fa89
+GET {{Formula1.Api_HostAddress}}/api/circuits/45
 Accept: application/json
 
 ### GrandPrix List

@@ -11,8 +11,8 @@ public static class ConstructorsEndpoints
     {
         app.MapGet("/api/constructors", ListConstructorsAsync);
         app.MapGet("/api/constructors/{id:int}", GetConstructorAsync);
-        app.MapGet("/api/constructors/{id:int}/results", GetConstructorResultsAsync);
         app.MapGet("/api/constructors/{id:int}/drivers", GetConstructorDriversAsync);
+        app.MapGet("/api/constructors/{id:int}/results", GetConstructorResultsAsync);
         //app.MapGet("/api/constructors/{id:int}/races", GetConstructorAsync);
         //app.MapGet("/api/constructors/{id:int}/seasons", GetConstructorAsync);
 

@@ -12,10 +12,10 @@ public class Race
     public string WikipediaUrl { get; set; }
 
     public int? CircuitId { get; set; }
-    public Circuit Circuit { get; set; }
+    public virtual Circuit Circuit { get; set; }
 
     public int GrandPrixId { get; set; }
-    public GrandPrix GrandPrix { get; set; }
+    public virtual GrandPrix GrandPrix { get; set; }
 
-    public ICollection<Session> Sessions { get; set; }
+    public virtual ICollection<Session> Sessions { get; set; }
 }

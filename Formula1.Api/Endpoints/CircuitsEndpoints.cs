@@ -13,7 +13,7 @@ public static class CircuitsEndpoints
         //app.MapGet("/api/circuits/{id:int}", GetCircuitAsync);
 
         //app.MapGet("/api/circuits/{id:int}/races", GetCircuitAsync);
-        // app.MapGet("/api/circuits/{id:int}/sessions", GetCircuitAsync);
+        //app.MapGet("/api/circuits/{id:int}/sessions", GetCircuitAsync);
         //app.MapGet("/api/circuits/{id:int}/seasons", GetCircuitAsync);
         //app.MapGet("/api/circuits/{id:int}/results", GetCircuitAsync);
         //app.MapGet("/api/circuits/{id:int}/drivers", GetCircuitAsync);

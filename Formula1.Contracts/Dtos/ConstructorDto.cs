@@ -1,3 +1,12 @@
-﻿namespace Formula1.Contracts.Dtos;
+﻿using Formula1.Domain.Entities;
 
-public record ConstructorDto(int Id, string Name, string WikipediaUrl);
+namespace Formula1.Contracts.Dtos;
+
+public record ConstructorDto(int Id, string Name, string WikipediaUrl)
+{
+    public static ConstructorDto FromConstructor(Constructor constructor)
+        => new(
+            Id: constructor.Id,
+            Name: constructor.Name,
+            WikipediaUrl: constructor.WikipediaUrl);
+}

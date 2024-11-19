@@ -1,4 +1,4 @@
-﻿namespace Formula1.Contracts.Dtos;
+﻿namespace Formula1.Contracts.Dtos.PaginatedDtos;
 
 public record SessionsPaginatedDto(
     List<SessionDto> Sessions,

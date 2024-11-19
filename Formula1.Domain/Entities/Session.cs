@@ -7,10 +7,10 @@ public class Session
     public DateTime StartDateTimeUtc { get; set; }
 
     public int SessionTypeId { get; set; }
-    public SessionType SessionType { get; set; }
+    public virtual SessionType SessionType { get; set; }
 
     public int RaceId { get; set; }
-    public Race Race { get; set; }
+    public virtual Race Race { get; set; }
 
-    public ICollection<Result> Results { get; set; }
+    public virtual ICollection<Result> Results { get; set; }
 }

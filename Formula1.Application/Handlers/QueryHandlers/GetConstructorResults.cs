@@ -1,5 +1,6 @@
 ﻿using Formula1.Application.Interfaces.Persistence;
 using Formula1.Contracts.Dtos;
+using Formula1.Contracts.Dtos.PaginatedDtos;
 using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

@@ -8,5 +8,5 @@ public class Circuit
 
     public string WikipediaUrl { get; set; }
 
-    public ICollection<Race> Races { get; set; }
+    public virtual ICollection<Race> Races { get; set; }
 }

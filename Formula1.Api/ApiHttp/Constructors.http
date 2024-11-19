@@ -1,0 +1,25 @@
+@Formula1.Api_HostAddress = https://localhost:7277
+
+### Constructors
+
+GET {{Formula1.Api_HostAddress}}/api/constructors?pagenumber=3&pagesize=40
+Accept: application/json
+
+### Constructor
+
+GET {{Formula1.Api_HostAddress}}/api/constructors/6
+Accept: application/json
+
+
+### Constructor drivers
+
+GET {{Formula1.Api_HostAddress}}/api/constructors/6/drivers
+Accept: application/json
+
+
+### Constructor results
+
+GET {{Formula1.Api_HostAddress}}/api/constructors/6/results
+Accept: application/json
+
+###

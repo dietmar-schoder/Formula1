@@ -1,0 +1,23 @@
+@Formula1.Api_HostAddress = https://localhost:7277
+
+### Drivers
+
+GET {{Formula1.Api_HostAddress}}/api/drivers?pagenumber=3&pagesize=40
+
+### Driver
+
+GET {{Formula1.Api_HostAddress}}/api/drivers/770
+Accept: application/json
+
+### Driver constructors
+
+GET {{Formula1.Api_HostAddress}}/api/drivers/770/constructors
+Accept: application/json
+
+
+### Driver results
+
+GET {{Formula1.Api_HostAddress}}/api/drivers/770/results
+Accept: application/json
+
+###

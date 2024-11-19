@@ -1,7 +1,6 @@
 ﻿using Formula1.Application.Interfaces.Persistence;
 using Formula1.Application.Interfaces.Services;
 using Formula1.Contracts.Dtos;
-using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,13 +11,12 @@ public class GetSeasonDriverResults(
     IScopedLogService logService,
     IScopedErrorService errorService)
     : HandlerBase(dbContext, logService, errorService),
-        IRequestHandler<GetSeasonDriverResults.Query, ResultsPaginatedDto<ResultDto>>
+        IRequestHandler<GetSeasonDriverResults.Query, List<SeasonDriverResultDto>>
 {
-    public record Query(int Year, int DriverId) : IRequest<ResultsPaginatedDto<ResultDto>> { }
+    public record Query(int Year, int DriverId) : IRequest<List<SeasonDriverResultDto>> { }
 
-    public async Task<ResultsPaginatedDto<ResultDto>> Handle(Query query, CancellationToken cancellationToken)
-    {
-        var results = await _dbContext.FORMULA1_Results
+    public async Task<List<SeasonDriverResultDto>> Handle(Query query, CancellationToken cancellationToken)
+        => await _dbContext.FORMULA1_Results
             .Where(r => r.DriverId == query.DriverId &&
                         r.Session.Race.SeasonYear == query.Year)
             .Include(r => r.Constructor)
@@ -28,11 +26,7 @@ public class GetSeasonDriverResults(
             .Include(r => r.Session)
                 .ThenInclude(s => s.SessionType)
             .OrderBy(r => r.Session.Race.Round)
+                .ThenBy(r => r.Position)
+            .Select(r => SeasonDriverResultDto.FromResult(r))
             .ToListAsync(cancellationToken);
-        return new ResultsPaginatedDto<ResultDto>(
-            results.Adapt<List<ResultDto>>(),
-            1,
-            results.Count,
-            results.Count);
-    }
 }
