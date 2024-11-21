@@ -2,15 +2,13 @@
 
 namespace Formula1.Contracts.Dtos;
 
-public record ResultDto(
+public record DriverResultDto(
     int Id,
     int Position,
     string Ranking,
     decimal Points,
     int ConstructorId,
     string ConstructorName,
-    int DriverId,
-    string DriverName,
     int SessionId,
     int SessionTypeId,
     string SessionTypeDescription,
@@ -20,10 +18,9 @@ public record ResultDto(
     int GrandPrixId,
     string GrandPrixName,
     int CircuitId,
-    string CircuitName
-)
+    string CircuitName)
 {
-    public static ResultDto FromResult(Result result)
+    public static DriverResultDto FromResult(Result result)
         => new(
             Id: result.Id,
             Position: result.Position,
@@ -31,8 +28,6 @@ public record ResultDto(
             Points: result.Points / 100m,
             ConstructorId: result.ConstructorId,
             ConstructorName: result.Constructor.Name,
-            DriverName: result.Driver.Name,
-            DriverId: result.DriverId,
             SessionId: result.SessionId,
             SessionTypeId: result.Session.SessionTypeId,
             SessionTypeDescription: result.Session.SessionType.Description,

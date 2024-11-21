@@ -1,34 +1,31 @@
 ﻿using Formula1.Application.Interfaces.Persistence;
-using Formula1.Application.Interfaces.Services;
 using Formula1.Contracts.Dtos;
 using Formula1.Contracts.Dtos.PaginatedDtos;
-using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Formula1.Application.Handlers.QueryHandlers;
 
-public class GetCircuits(
-    IApplicationDbContext dbContext,
-    IScopedLogService logService,
-    IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService), IRequestHandler<GetCircuits.Query, CircuitsPaginatedDto>
+public class GetCircuits(IApplicationDbContext dbContext)
+    : IRequestHandler<GetCircuits.Query, CircuitsPaginatedDto>
 {
+    private readonly IApplicationDbContext _dbContext = dbContext;
+
     public record Query(int PageNumber, int PageSize) : IRequest<CircuitsPaginatedDto> { }
 
     public async Task<CircuitsPaginatedDto> Handle(Query query, CancellationToken cancellationToken)
     {
-        Log();
+        var pageSize = Math.Min(query.PageSize, 100);
         var totalCount = await _dbContext.FORMULA1_Circuits.CountAsync(cancellationToken);
-        var circuits = await _dbContext.FORMULA1_Circuits
+        var circuitDtos = await _dbContext.FORMULA1_Circuits
             .AsNoTracking()
-            .OrderBy(e => e.Name)
+            .OrderBy(c => c.Name)
             .Skip((query.PageNumber - 1) * query.PageSize)
             .Take(query.PageSize)
+            .Select(c => CircuitDto.FromCircuit(c))
             .ToListAsync(cancellationToken);
-        Log(circuits.Count.ToString(), nameof(circuits.Count));
         return new CircuitsPaginatedDto(
-            circuits.Adapt<List<CircuitDto>>(),
+            circuitDtos,
             query.PageNumber,
             query.PageSize,
             totalCount);

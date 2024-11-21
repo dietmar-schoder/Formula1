@@ -8,7 +8,7 @@ namespace Formula1.Application.Handlers.QueryHandlers;
 public class GetSessionResults(IApplicationDbContext dbContext)
     : IRequestHandler<GetSessionResults.Query, List<SessionResultDto>>
 {
-    protected readonly IApplicationDbContext _dbContext = dbContext;
+    private readonly IApplicationDbContext _dbContext = dbContext;
 
     public record Query(int Id, int PageNumber, int PageSize) : IRequest<List<SessionResultDto>> { }
 

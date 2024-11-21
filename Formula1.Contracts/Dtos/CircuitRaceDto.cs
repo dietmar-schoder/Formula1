@@ -2,25 +2,20 @@
 
 namespace Formula1.Contracts.Dtos;
 
-public record RaceDto(
+public record CircuitRaceDto(
     int Id,
     int SeasonYear,
     int Round,
     string WikipediaUrl,
     int GrandPrixId,
-    string GrandPrixName,
-    int CircuitId,
-    string CircuitName
-)
+    string GrandPrixName)
 {
-    public static RaceDto FromRace(Race race)
+    public static CircuitRaceDto FromRace(Race race)
         => new(
             race.Id,
             race.SeasonYear,
             race.Round,
             race.WikipediaUrl,
             race.GrandPrixId,
-            race.GrandPrix.Name,
-            race.CircuitId ?? 0,
-            race.Circuit.Name);
+            race.GrandPrix.Name);
 }

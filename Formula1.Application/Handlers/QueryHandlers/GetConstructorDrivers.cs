@@ -9,7 +9,7 @@ public class GetConstructorDrivers(
     IApplicationDbContext dbContext)
     : IRequestHandler<GetConstructorDrivers.Query, List<DriverDto>>
 {
-    protected readonly IApplicationDbContext _dbContext = dbContext;
+    private readonly IApplicationDbContext _dbContext = dbContext;
 
     public record Query(int Id) : IRequest<List<DriverDto>> { }
 

@@ -1,0 +1,11 @@
+@Formula1.Api_HostAddress = https://localhost:7277
+
+### GrandPrix List
+
+GET {{Formula1.Api_HostAddress}}/api/grandprix?pagenumber=3&pagesize=4
+Accept: application/json
+
+### GrandPrix
+
+GET {{Formula1.Api_HostAddress}}/api/grandprix/19
+Accept: application/json

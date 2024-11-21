@@ -1,7 +1,13 @@
-﻿namespace Formula1.Contracts.Dtos;
+﻿using Formula1.Domain.Entities;
 
-public class SessionTypeDto
+namespace Formula1.Contracts.Dtos;
+
+public record SessionTypeDto(
+    int Id,
+    string Description)
 {
-    public int Id { get; set; }
-    public string Description { get; set; }
+    public static SessionTypeDto FromSessionType(SessionType sessionType)
+        => new(
+            sessionType.Id,
+            sessionType.Description);
 }

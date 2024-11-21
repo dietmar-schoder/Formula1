@@ -1,18 +1,15 @@
 ﻿using Formula1.Application.Interfaces.Persistence;
-using Formula1.Application.Interfaces.Services;
 using Formula1.Contracts.Dtos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Formula1.Application.Handlers.QueryHandlers;
 
-public class GetSeasonDrivers(
-    IApplicationDbContext dbContext,
-    IScopedLogService logService,
-    IScopedErrorService errorService)
-    : HandlerBase(dbContext, logService, errorService),
-        IRequestHandler<GetSeasonDrivers.Query, List<DriverDto>>
+public class GetSeasonDrivers(IApplicationDbContext dbContext)
+    : IRequestHandler<GetSeasonDrivers.Query, List<DriverDto>>
 {
+    private readonly IApplicationDbContext _dbContext = dbContext;
+
     public record Query(int Year) : IRequest<List<DriverDto>> { }
 
     public async Task<List<DriverDto>> Handle(Query query, CancellationToken cancellationToken)

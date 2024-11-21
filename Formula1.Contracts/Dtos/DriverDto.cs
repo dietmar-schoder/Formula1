@@ -2,7 +2,10 @@
 
 namespace Formula1.Contracts.Dtos;
 
-public record DriverDto(int Id, string Name, string WikipediaUrl)
+public record DriverDto(
+    int Id,
+    string Name,
+    string WikipediaUrl)
 {
     public static DriverDto FromDriver(Driver driver)
         => new(

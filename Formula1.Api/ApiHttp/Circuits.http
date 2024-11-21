@@ -1,0 +1,16 @@
+@Formula1.Api_HostAddress = https://localhost:7277
+
+### Circuits
+
+GET {{Formula1.Api_HostAddress}}/api/circuits?pagenumber=1&pagesize=100
+Accept: application/json
+
+### Circuit
+
+GET {{Formula1.Api_HostAddress}}/api/circuits/7
+Accept: application/json
+
+### Circuit races
+
+GET {{Formula1.Api_HostAddress}}/api/circuits/17/races
+Accept: application/json

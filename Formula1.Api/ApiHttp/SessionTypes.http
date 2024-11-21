@@ -1,0 +1,6 @@
+@Formula1.Api_HostAddress = https://localhost:7277
+
+### SessionTypes
+
+GET {{Formula1.Api_HostAddress}}/api/sessiontypes?pagenumber=1&pagesize=20
+Accept: application/json

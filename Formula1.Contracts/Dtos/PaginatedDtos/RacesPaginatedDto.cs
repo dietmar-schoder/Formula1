@@ -1,6 +1,6 @@
 ﻿namespace Formula1.Contracts.Dtos.PaginatedDtos;
 
-public record RacesPaginatedDto(List<RaceDto> Races,
+public record RacesPaginatedDto<T>(List<T> Races,
     int PageNumber,
     int PageSize,
     int TotalCount);
