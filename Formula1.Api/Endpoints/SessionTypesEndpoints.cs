@@ -1,4 +1,4 @@
-﻿using Formula1.Application.Handlers.QueryHandlers;
+﻿using Formula1.Application.Handlers.QueryHandlers.Sessions;
 using MediatR;
 
 namespace Formula1.Api.Endpoints;

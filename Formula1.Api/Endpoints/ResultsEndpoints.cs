@@ -1,4 +1,4 @@
-﻿using Formula1.Application.Handlers.QueryHandlers;
+﻿using Formula1.Application.Handlers.QueryHandlers.Results;
 using Formula1.Application.Interfaces.Services;
 using MediatR;
 

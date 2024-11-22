@@ -1,4 +1,4 @@
-﻿using Formula1.Application.Handlers.QueryHandlers;
+﻿using Formula1.Application.Handlers.QueryHandlers.Constructors;
 using Formula1.Application.Interfaces.Services;
 using MediatR;
 
@@ -12,8 +12,8 @@ public static class ConstructorsEndpoints
         app.MapGet("/api/constructors/{id:int}", GetConstructorAsync);
         app.MapGet("/api/constructors/{id:int}/drivers", GetConstructorDriversAsync);
         app.MapGet("/api/constructors/{id:int}/results", GetConstructorResultsAsync);
-        //app.MapGet("/api/constructors/{id:int}/races", GetConstructorAsync);
-        //app.MapGet("/api/constructors/{id:int}/seasons", GetConstructorAsync);
+        app.MapGet("/api/constructors/{id:int}/races", GetConstructorRacesAsync);
+        app.MapGet("/api/constructors/{id:int}/seasons", GetConstructorSeasonsAsync);
 
         static async Task<IResult> ListConstructorsAsync(IMediator mediator, int pageNumber = 1, int PageSize = 20)
             => Results.Ok(await mediator.Send(new GetConstructors.Query(pageNumber, PageSize)));
@@ -26,5 +26,11 @@ public static class ConstructorsEndpoints
 
         static async Task<IResult> GetConstructorResultsAsync(IMediator mediator, int id, int pageNumber = 1, int pageSize = 20)
             => await mediator.SendQueryAsync(new GetConstructorResults.Query(id, pageNumber, pageSize));
+
+        static async Task<IResult> GetConstructorRacesAsync(IMediator mediator, int id, int pageNumber = 1, int pageSize = 20)
+            => await mediator.SendQueryAsync(new GetConstructorRaces.Query(id, pageNumber, pageSize));
+
+        static async Task<IResult> GetConstructorSeasonsAsync(IMediator mediator, int id, int pageNumber = 1, int pageSize = 20)
+            => await mediator.SendQueryAsync(new GetConstructorSeasons.Query(id));
     }
 }

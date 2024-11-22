@@ -17,12 +17,12 @@ Accept: application/json
 
 ### Season Constructors
 
-GET {{Formula1.Api_HostAddress}}/api/seasons/1951/constructors
+GET {{Formula1.Api_HostAddress}}/api/seasons/1950/constructors
 Accept: application/json
 
 ### Season Constructor Results
 
-GET {{Formula1.Api_HostAddress}}/api/seasons/2024/constructors/6/results
+GET {{Formula1.Api_HostAddress}}/api/seasons/1950/constructors/6/results
 Accept: application/json
 
 ### Season Drivers

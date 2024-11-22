@@ -2,7 +2,7 @@
 
 ### Drivers
 
-GET {{Formula1.Api_HostAddress}}/api/drivers?pagenumber=3&pagesize=40
+GET {{Formula1.Api_HostAddress}}/api/drivers?pagenumber=3&pagesize=100
 
 ### Driver
 
@@ -14,8 +14,17 @@ Accept: application/json
 GET {{Formula1.Api_HostAddress}}/api/drivers/770/constructors
 Accept: application/json
 
-
 ### Driver results
 
 GET {{Formula1.Api_HostAddress}}/api/drivers/770/results
+Accept: application/json
+
+### Driver races
+
+GET {{Formula1.Api_HostAddress}}/api/drivers/689/races?pagenumber=3&pagesize=10
+Accept: application/json
+
+### Driver seasons
+
+GET {{Formula1.Api_HostAddress}}/api/drivers/457/seasons
 Accept: application/json

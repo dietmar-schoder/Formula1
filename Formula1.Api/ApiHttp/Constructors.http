@@ -10,14 +10,22 @@ Accept: application/json
 GET {{Formula1.Api_HostAddress}}/api/constructors/6
 Accept: application/json
 
-
 ### Constructor drivers
 
 GET {{Formula1.Api_HostAddress}}/api/constructors/6/drivers
 Accept: application/json
 
-
 ### Constructor results
 
 GET {{Formula1.Api_HostAddress}}/api/constructors/6/results
+Accept: application/json
+
+### Constructor races
+
+GET {{Formula1.Api_HostAddress}}/api/constructors/6/races?pagenumber=1&pagesize=10
+Accept: application/json
+
+### Constructor seasons
+
+GET {{Formula1.Api_HostAddress}}/api/constructors/6/seasons
 Accept: application/json
