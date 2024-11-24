@@ -23,7 +23,7 @@ public class GetSeasonDriverResults(IApplicationDbContext dbContext)
             .Include(r => r.Session)
                 .ThenInclude(s => s.SessionType)
             .OrderBy(r => r.Session.Race.Round)
-                .ThenBy(r => r.Position)
+                .ThenByDescending(r => r.Session.SessionTypeId)
             .Select(r => SeasonDriverResultDto.FromResult(r))
             .ToListAsync(cancellationToken);
 }

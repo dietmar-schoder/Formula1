@@ -1,6 +1,8 @@
 ﻿using Formula1.Application.Handlers.QueryHandlers.Seasons;
 using Formula1.Application.Interfaces.Services;
+using Formula1.Domain.Entities;
 using MediatR;
+using System.Diagnostics;
 
 namespace Formula1.Api.Endpoints;
 
@@ -32,12 +34,28 @@ public static class SeasonsEndpoints
             => await mediator.SendQueryAsync(new GetSeasonDrivers.Query(year));
 
         static async Task<IResult> GetSeasonDriverResultsAsync(IMediator mediator, int year, int id)
-            => await mediator.SendQueryAsync(new GetSeasonDriverResults.Query(year, id));
+        {
+            var results = await mediator.Send(new GetSeasonDriverResults.Query(year, id));
+
+            //Debug.WriteLine(string.Join(" ", results.Select(dto => dto.SessionId)));
+            //Debug.WriteLine(string.Join(" ", results.Select(dto => dto.Position)));
+
+            return Results.Ok(results);
+        }
 
         static async Task<IResult> GetSeasonConstructorsAsync(IMediator mediator, int year)
             => await mediator.SendQueryAsync(new GetSeasonConstructors.Query(year));
 
         static async Task<IResult> GetSeasonConstructorResultsAsync(IMediator mediator, int year, int id)
-            => await mediator.SendQueryAsync(new GetSeasonConstructorResults.Query(year, id));
+        {
+            var results = await mediator.Send(new GetSeasonConstructorResults.Query(year, id));
+
+            //Debug.WriteLine(string.Join(" ", results.Select(dto => dto.SessionId).Distinct()));
+            //Debug.WriteLine(string.Join(" ", results
+            //    .GroupBy(item => item.SessionId)
+            //    .Select(group => group.Sum(item => item.Position))));
+
+            return Results.Ok(results);
+        }
     }
 }

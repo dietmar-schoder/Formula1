@@ -26,7 +26,7 @@ public class GetSeasonConstructorResults(IApplicationDbContext dbContext)
             .Include(r => r.Session)
                 .ThenInclude(s => s.SessionType)
             .OrderBy(r => r.Session.Race.Round)
-                .ThenBy(r => r.Position)
+                .ThenByDescending(r => r.Session.SessionTypeId)
             .Select(r => SeasonConstructorResultDto.FromResult(r))
             .ToListAsync(cancellationToken);
 }
