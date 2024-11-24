@@ -4,3 +4,8 @@
 
 GET {{Formula1.Api_HostAddress}}/api/sessiontypes?pagenumber=1&pagesize=20
 Accept: application/json
+
+### SessionTypes CSV
+
+GET {{Formula1.Api_HostAddress}}/api/sessiontypes
+Accept: text/csv

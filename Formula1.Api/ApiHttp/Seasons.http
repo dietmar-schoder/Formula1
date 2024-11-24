@@ -20,6 +20,11 @@ Accept: application/json
 GET {{Formula1.Api_HostAddress}}/api/seasons/2024/constructors
 Accept: application/json
 
+### Season Constructors Results CSV
+
+GET {{Formula1.Api_HostAddress}}/api/seasons/2024/constructors/results
+Accept: text/csv
+
 ### Season Constructor Results
 
 GET {{Formula1.Api_HostAddress}}/api/seasons/2024/constructors/331/results
@@ -34,3 +39,8 @@ Accept: application/json
 
 GET {{Formula1.Api_HostAddress}}/api/seasons/2024/drivers/779/results
 Accept: application/json
+
+### Season Drivers Results CSV
+
+GET {{Formula1.Api_HostAddress}}/api/seasons/2022/drivers/results
+Accept: text/csv
